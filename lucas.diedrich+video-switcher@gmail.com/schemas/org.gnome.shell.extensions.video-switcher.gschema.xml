@@ -1,7 +1,11 @@
 <schemalist gettext-domain="gnome-shell-extensions">
-  <schema id="org.gnome.shell.extensions.video-switcher" path="/org/gnome/shell/extensions/video-switcher/">
- 	<key name="shortcut-switch" type="as">
-      <default><![CDATA[['<Super>p']]]></default>
-    </key>    
-  </schema>
+	<schema id="org.gnome.shell.extensions.video-switcher" path="/org/gnome/shell/extensions/video-switcher/">
+		<key name="shortcut-switch" type="as">
+	    <!-- For tests only-->
+	    <default><![CDATA[['<Super>i']]]></default>
+
+	    <!-- This should be the default shortcut-->
+ 	    <!--<default>  <![CDATA[['<Super>p']]]></default>-->
+	  </key>    
+	</schema>
 </schemalist>
