@@ -25,9 +25,10 @@ const ShellVersion = Config.PACKAGE_VERSION.split('.');;
 const _schema_file = "org.gnome.shell.extensions.video-switcher";
 const _shortcut = "shortcut-switch";
 const _meta_flags = Meta.KeyBindingFlags.NONE;
+const _show_running_icon = true;
+const _binding_mode = ShellVersion[1] <= 14 ? Shell.KeyBindingMode.NORMAL : Shell.ActionMode.NORMAL;
 
-let _button, _settings, _binding_mode;
-
+let _settings;
 
 /*
   Code Begin
@@ -46,6 +47,10 @@ function _showMessage(_text) {
     Mainloop.timeout_add(2000, function () { 
       label.destroy(); 
     });
+}
+
+function _showBindedMessage(display, screen, window, binding) {
+    this._showMessage("This is a message made by bind method");
 }
 
 // TAKEN FROM https://github.com/OttoAllmendinger/gnome-shell-imgur/blob/master/src/convenience.js
@@ -72,7 +77,6 @@ function loadSettings() {
     }
 
     _settings = new Gio.Settings({ settings_schema: schemaObj });
-    _binding_mode = ShellVersion[1] <= 14 ? Shell.KeyBindingMode.NORMAL : Shell.ActionMode.NORMAL
 }
 
 function loadKeyBinding(){
@@ -81,22 +85,19 @@ function loadKeyBinding(){
           _settings,
           _meta_flags,
           _binding_mode,
-          function(){
-            _showMessage("Hello world from keybind.");
-          }
+          Lang.bind(this, this._showBindedMessage)
     );
 }
 
-function init() {
-    log ("Loading everything");
-
+function addTopIcon(){
     _button = new St.Bin({ style_class: 'panel-button',
                           reactive: true,
                           can_focus: true,
                           x_fill: true,
                           y_fill: false,
                           track_hover: true });
-    let icon = new St.Icon({ icon_name: 'system-run-symbolic',
+    
+    let icon = new St.Icon({ icon_name: 'preferences-desktop-display-symbolic',
                              style_class: 'system-status-icon' });
 
     _button.set_child(icon);
@@ -104,10 +105,18 @@ function init() {
     _button.connect('button-press-event', function(){
       _showMessage("Hello World");
     });
+
+    Main.panel._rightBox.insert_child_at_index(_button, 0);    
+}
+
+function init() {
+    log ("Initing modules");
 }
 
 function enable() {
-    Main.panel._rightBox.insert_child_at_index(_button, 0);
+    if (_show_running_icon) {
+      addTopIcon();
+    }
     loadSettings();
     loadKeyBinding();
     log ("Everything has been loaded succesfully.");
