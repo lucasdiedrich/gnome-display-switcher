@@ -27,8 +27,26 @@ Want to contribute? Great! Just download, dev, and make a pull request;
 ### Todos
 
  - Add Code Comments
- - Add lots of functions
+ - Fix the TODOS on source code
+ - Make regression over Gnome-shell 3.10+
+ - Try to test over Ubuntu, Fedora and Open-Suse
  - Make it Work!
+
+###	Thanks
+
+This extension couldn't be done without some help of some people and principle this people work, so, below you see the best extensions which i've been based so on. This extension may have some of the below projects code inside of it:
+
+ - https://github.com/OttoAllmendinger/gnome-shell-imgur/blob/master/src/extension.js#L65
+
+ - https://github.com/simonthechipmunk/turnoffdisplay
+
+ - https://github.com/ithempel/redmine_time_tracker-undef.ch
+
+ - https://github.com/zakkak/workspace-grid-gnome-shell-extension?files=1
+
+ - Gnome-shell source code
+
+And a very special thanks for "" who gave me some north on gnome-shell extension development.
 
 License
 ----

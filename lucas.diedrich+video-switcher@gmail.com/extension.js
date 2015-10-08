@@ -15,68 +15,30 @@ const Shell = imports.gi.Shell;
 const Config = imports.misc.config;
 const ExtensionUtils = imports.misc.extensionUtils;
 
-const Me = ExtensionUtils.getCurrentExtension();
+const Local = ExtensionUtils.getCurrentExtension();
+const VideoSwitcher = Local.imports.videoSwitcher; 
+const Utils = Local.imports.utils;
 
 /*
   Control variables
 */
 const ShellVersion = Config.PACKAGE_VERSION.split('.');;
 
-const _schema_file = "org.gnome.shell.extensions.video-switcher";
 const _shortcut = "shortcut-switch";
 const _meta_flags = Meta.KeyBindingFlags.NONE;
 const _show_running_icon = true;
+const _is_running_X11 = true;
 const _binding_mode = ShellVersion[1] <= 14 ? Shell.KeyBindingMode.NORMAL : Shell.ActionMode.NORMAL;
 
-let _settings;
+let _settings, _video_manager;
 
 /*
-  Code Begin
+  TODO: Make this an Class.
+  TODO: Add comments.
+  TODO: Verify if current version of linux is running on top of Wayland, if so, disable this extension
 */
-function _showMessage(_text) {
- 
-    let text = _text + " ";
-    let label = new St.Label({ style_class: 'helloworld-label', text: text });
-    let monitor = Main.layoutManager.primaryMonitor;
-
-    global.stage.add_actor(label);
-    
-    label.set_position(Math.floor (monitor.width / 2 - label.width / 2), 
-                        Math.floor(monitor.height / 2 - label.height / 2));
-    
-    Mainloop.timeout_add(2000, function () { 
-      label.destroy(); 
-    });
-}
-
-function _showBindedMessage(display, screen, window, binding) {
-    this._showMessage("This is a message made by bind method");
-}
-
-// TAKEN FROM https://github.com/OttoAllmendinger/gnome-shell-imgur/blob/master/src/convenience.js
-function loadSettings() {
-
-    const GioSSS = Gio.SettingsSchemaSource;
-
-    let schemaDir = Me.dir.get_child('schemas');
-    let schemaSource;
-    if (schemaDir.query_exists(null))
-        schemaSource = GioSSS.new_from_directory(schemaDir.get_path(),
-                                                 GioSSS.get_default(),
-                                                 false);
-    else
-        schemaSource = GioSSS.get_default();
-
-
-    let schemaObj = schemaSource.lookup(_schema_file, true);
-    
-
-    if (!schemaObj) {
-        throw new Error('Schema ' + _schema_file + ' could not be found for extension '
-                          + Me.metadata.uuid + '. Please check your installation.');
-    }
-
-    _settings = new Gio.Settings({ settings_schema: schemaObj });
+function _showDisplaySwitcher(display, screen, window, binding) {
+    this._video_manager.popup(binding.is_reversed(), binding.get_name(), binding.get_mask()); 
 }
 
 function loadKeyBinding(){
@@ -85,7 +47,7 @@ function loadKeyBinding(){
           _settings,
           _meta_flags,
           _binding_mode,
-          Lang.bind(this, this._showBindedMessage)
+          Lang.bind(this, this._showDisplaySwitcher)
     );
 }
 
@@ -103,7 +65,7 @@ function addTopIcon(){
     _button.set_child(icon);
 
     _button.connect('button-press-event', function(){
-      _showMessage("Hello World");
+      Utils._showMessage("Video Switcher extension has been loaded");
     });
 
     Main.panel._rightBox.insert_child_at_index(_button, 0);    
@@ -114,12 +76,15 @@ function init() {
 }
 
 function enable() {
+  if(_is_running_X11){
     if (_show_running_icon) {
       addTopIcon();
-    }
-    loadSettings();
+    }        
+    _settings = Utils._loadSettings();
     loadKeyBinding();
-    log ("Everything has been loaded succesfully.");
+    _video_manager = new VideoSwitcher.VideoSwitcherManager();
+  }
+  log ("Everything has been loaded succesfully.");
 }
 
 function disable() {

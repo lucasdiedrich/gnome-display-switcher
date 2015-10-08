@@ -19,30 +19,45 @@ const Gtk = imports.gi.Gtk;
 const POPUP_APPICON_SIZE = 96;
 const POPUP_FADE_TIME = 0.1; // seconds
 
+const ExtensionUtils = imports.misc.extensionUtils;
+const Local = ExtensionUtils.getCurrentExtension();
+const Utils = Local.imports.utils;
+const Display = Local.imports.displaySwitcher;
+
+/*
+    TODO: Better name for Manager
+    TODO: Add comments.
+*/
 const VideoSwitcherManager = new Lang.Class({
     Name: 'VideoSwitcherManager',
 
     _init: function() {
-        this._items = [];
+        /*
+            TODO: Verify how many displays are disposible, if only one show the current display.
+        */
+        this._items = [
+            { name: "Primary display",
+                iconName: "video-display-symbolic",
+                mode: Display.MODE_PRIMARY},
+            { name: "Mirror",
+                iconName: "video-display-symbolic",
+                mode: Display.MODE_MIRROR},
+            { name: "Extend",
+                iconName: "video-display-symbolic",
+                mode: Display.MODE_EXTEND},
+            { name: "Second display",
+                iconName: "video-display-symbolic",
+                mode: Display.MODE_SECONDARY}
+        ];
     },
 
     popup: function(backward, binding, mask) {
-        let items;
-
-        for (let i = 0; i < 3; i++) {
-            let icon;
-            let iconName = 'video-display-symbolic';
-
-            items.push({ name: "Popup - " + i,
-                         focusCallback: function() {
-                                 log("test"); },
-                         iconActor: icon,
-                         iconName: iconName});
-        }
 
         if (!this._popup) {
-            this._popup = new SuperPPopup(items);
+            this._popup = new SuperPPopup(this._items);
+
             this._popup.show(backward, binding, mask);
+            this._popup._select(Display._getModeIndex());
 
             this._popup.actor.connect('destroy',
                                       Lang.bind(this, function() {
@@ -58,7 +73,6 @@ const SuperPPopup = new Lang.Class({
 
     _init: function(items) {
         this.parent(items);
-
         this._switcherList = new VideoSwitcher(this._items);
     },
 
@@ -75,6 +89,7 @@ const SuperPPopup = new Lang.Class({
 
     _finish : function(time) {
         this.parent(time);
+        Display._setMode(this._items[this._selectedIndex].mode)
     },
 });
 
@@ -84,9 +99,9 @@ const VideoSwitcher = new Lang.Class({
 
     _init : function(items) {
         this.parent(true);
-
-        for (let i = 0; i < items.length; i++)
+        for (let i = 0; i < items.length; i++){
             this._addIcon(items[i]);
+        }
     },
 
     _addIcon : function(item) {
