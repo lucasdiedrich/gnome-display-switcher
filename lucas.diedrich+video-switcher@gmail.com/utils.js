@@ -9,9 +9,9 @@ const Mainloop = imports.mainloop;
 const Config = imports.misc.config;
 const ExtensionUtils = imports.misc.extensionUtils;
 const Local = ExtensionUtils.getCurrentExtension();
-const Gio = imports.gi.Gio;
 
-const _schema_file = "org.gnome.shell.extensions.video-switcher";
+const Gettext = imports.gettext;
+const Gio = imports.gi.Gio;
 
 /*
 	TODO: Make this an Class.
@@ -33,8 +33,40 @@ function _showMessage(_text) {
     });
 }
 
-// TAKEN FROM https://github.com/OttoAllmendinger/gnome-shell-imgur/blob/master/src/convenience.js
-function _loadSettings() {
+/**
+ * initTranslations:
+ * @domain: (optional): the gettext domain to use
+ *
+ * Initialize Gettext to load translations from extensionsdir/locale.
+ * If @domain is not provided, it will be taken from metadata['gettext-domain']
+ */
+function initTranslations(domain) {
+
+    domain = domain || extension.metadata['gettext-domain'];
+
+    // check if this extension was built with "make zip-file", and thus
+    // has the locale files in a subfolder
+    // otherwise assume that extension has been installed in the
+    // same prefix as gnome-shell
+    let localeDir = Local.dir.get_child('locale');
+    if (localeDir.query_exists(null))
+        Gettext.bindtextdomain(domain, localeDir.get_path());
+    else
+        Gettext.bindtextdomain(domain, Config.LOCALEDIR);
+}
+
+/**
+ * getSettings:
+ * @schema: (optional): the GSettings schema id
+ *
+ * Builds and return a GSettings schema for @schema, using schema files
+ * in extensionsdir/schemas. If @schema is not provided, it is taken from
+ * metadata['settings-schema'].
+ *
+ */
+function getSettings(schema) {
+
+    schema = schema || Local.metadata['settings-schema']
 
     const GioSSS = Gio.SettingsSchemaSource;
 
@@ -47,11 +79,10 @@ function _loadSettings() {
     else
         schemaSource = GioSSS.get_default();
 
-
-    let schemaObj = schemaSource.lookup(_schema_file, true);
+    let schemaObj = schemaSource.lookup(schema, true);
 
     if (!schemaObj) {
-        throw new Error('Schema ' + _schema_file + ' could not be found for extension '
+        throw new Error('Schema ' + schema + ' could not be found for extension '
                           + Local.metadata.uuid + '. Please check your installation.');
     }
 

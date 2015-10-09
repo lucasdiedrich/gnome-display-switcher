@@ -24,6 +24,7 @@ const Utils = Local.imports.utils;
 */
 const ShellVersion = Config.PACKAGE_VERSION.split('.');;
 
+const _schema_file = "org.gnome.shell.extensions.video-switcher";
 const _shortcut = "shortcut-switch";
 const _meta_flags = Meta.KeyBindingFlags.NONE;
 const _show_running_icon = true;
@@ -80,7 +81,7 @@ function enable() {
     if (_show_running_icon) {
       addTopIcon();
     }        
-    _settings = Utils._loadSettings();
+    _settings = Utils.getSettings(_schema_file);
     loadKeyBinding();
     _video_manager = new VideoSwitcher.VideoSwitcherManager();
   }

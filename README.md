@@ -44,9 +44,11 @@ This extension couldn't be done without some help of some people and principle t
 
  - https://github.com/zakkak/workspace-grid-gnome-shell-extension?files=1
 
+ - https://gist.github.com/buzztaiki/1487781#file-gjs-io-sample-js-L26
+
  - Gnome-shell source code
 
-And a very special thanks for "" who gave me some north on gnome-shell extension development.
+And a very special thanks for "feborges" who gave me some north on gnome-shell extension development over gnome-shell IRC.
 
 License
 ----
