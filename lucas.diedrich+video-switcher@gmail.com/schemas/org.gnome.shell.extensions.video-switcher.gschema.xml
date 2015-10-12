@@ -3,7 +3,6 @@
 		<key name="shortcut-switch" type="as">
 	    <!-- For tests only-->
 	    <default><![CDATA[['<Super>i']]]></default>
-
 	    <!-- This should be the default shortcut-->
  	    <!--<default>  <![CDATA[['<Super>p']]]></default>-->
 	  </key>    

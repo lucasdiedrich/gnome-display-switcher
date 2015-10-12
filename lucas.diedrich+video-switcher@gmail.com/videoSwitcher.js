@@ -1,35 +1,31 @@
+
+const St    = imports.gi.St,
+      Gio   = imports.gi.Gio,
+      Gtk   = imports.gi.Gtk,
+      Meta  = imports.gi.Meta,
+      Main  = imports.ui.main,
+      Lang  = imports.lang,
+      Shell     = imports.gi.Shell,
+      Params    = imports.misc.params,
+      Tweener   = imports.ui.tweener,
+      Clutter   = imports.gi.Clutter,
+      SwitcherPopup = imports.ui.switcherPopup;
+
+const ExtensionUtils = imports.misc.extensionUtils,
+      Local     = ExtensionUtils.getCurrentExtension(),
+      Utils     = Local.imports.utils,
+      Display   = Local.imports.displaySwitcher;
+
+const POPUP_APPICON_SIZE = 96,
+      POPUP_FADE_TIME    = 0.1;
+      
 /*
-  IMPORTS - REALLY LOTS OF THEM!
-*/
-const St = imports.gi.St;
-const Main = imports.ui.main;
-
-const Lang = imports.lang;
-
-const Gio = imports.gi.Gio;
-const Meta = imports.gi.Meta;
-const Shell = imports.gi.Shell;
-
-const Clutter = imports.gi.Clutter;
-const SwitcherPopup = imports.ui.switcherPopup;
-const Params = imports.misc.params;
-const Tweener = imports.ui.tweener;
-const Gtk = imports.gi.Gtk;
-
-const POPUP_APPICON_SIZE = 96;
-const POPUP_FADE_TIME = 0.1; // seconds
-
-const ExtensionUtils = imports.misc.extensionUtils;
-const Local = ExtensionUtils.getCurrentExtension();
-const Utils = Local.imports.utils;
-const Display = Local.imports.displaySwitcher;
-
-/*
-    TODO: Better name for Manager
     TODO: Add comments.
+    TODO: Each kind of mode should have its own ICON
+    TODO: Names of kinds of mode should be in PO file
 */
-const VideoSwitcherManager = new Lang.Class({
-    Name: 'VideoSwitcherManager',
+const DisplaySwitcherManager = new Lang.Class({
+    Name: 'DisplaySwitcherManager',
 
     _init: function() {
         /*
@@ -54,7 +50,7 @@ const VideoSwitcherManager = new Lang.Class({
     popup: function(backward, binding, mask) {
 
         if (!this._popup) {
-            this._popup = new SuperPPopup(this._items);
+            this._popup = new DisplaySwitcherPopUp(this._items);
 
             this._popup.show(backward, binding, mask);
             this._popup._select(Display._getModeIndex());
@@ -67,13 +63,13 @@ const VideoSwitcherManager = new Lang.Class({
     }
 });
 
-const SuperPPopup = new Lang.Class({
-    Name: 'SuperPPopup',
+const DisplaySwitcherPopUp = new Lang.Class({
+    Name: 'DisplaySwitcherPopUp',
     Extends: SwitcherPopup.SwitcherPopup,
 
     _init: function(items) {
         this.parent(items);
-        this._switcherList = new VideoSwitcher(this._items);
+        this._switcherList = new DisplaySwitcherList(this._items);
     },
 
     _keyPressHandler: function(keysym, action) {
@@ -93,8 +89,8 @@ const SuperPPopup = new Lang.Class({
     },
 });
 
-const VideoSwitcher = new Lang.Class({
-    Name: 'VideoSwitcher',
+const DisplaySwitcherList = new Lang.Class({
+    Name: 'DisplaySwitcherList',
     Extends: SwitcherPopup.SwitcherList,
 
     _init : function(items) {

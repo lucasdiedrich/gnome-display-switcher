@@ -1,22 +1,22 @@
 
-/*
-  IMPORTS - REALLY LOTS OF THEM!
-*/
-const St = imports.gi.St;
-const Main = imports.ui.main;
-const Mainloop = imports.mainloop;
-
-const Config = imports.misc.config;
-const ExtensionUtils = imports.misc.extensionUtils;
-const Local = ExtensionUtils.getCurrentExtension();
-
-const Gettext = imports.gettext;
-const Gio = imports.gi.Gio;
+const St    = imports.gi.St,
+    Gio     = imports.gi.Gio,
+    Main    = imports.ui.main,
+    Config  = imports.misc.config,
+    Gettext = imports.gettext,
+    Mainloop = imports.mainloop,
+    ExtensionUtils = imports.misc.extensionUtils,
+    Local   = ExtensionUtils.getCurrentExtension();
 
 /*
-	TODO: Make this an Class.
-  TODO: Add comments.
+    TODO: Make this an Class?
 */
+/**
+ * _showMessage:
+ * @_text: (obrigatory): the text to show on popup
+ *
+ * Show an message in a popup on primary display during 1000 miliseconds.
+ */
 function _showMessage(_text) {
  
     let text = _text + " ";

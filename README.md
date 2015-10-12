@@ -7,7 +7,7 @@ Video Switcher for Gnome-Shell is a Extension for providing a easy and fast way 
   - Magic
 
 ### Version
-0.0 - Pré - Alpha - Not working, and in development.
+0.1 - First working version.
 
 ### Installation
 

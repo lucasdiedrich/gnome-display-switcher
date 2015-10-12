@@ -1,4 +1,6 @@
-{"description": "Changes the video options (Xrandr)", 
+{
 	"name": "Video Switcher",
-	"shell-version": ["3.16"], 
-	"uuid": "lucas.diedrich+video-switcher@gmail.com"}
+	"description": "Manage display settings using xRandr", 
+	"shell-version": ["3.14","3.16"], 
+	"uuid": "lucas.diedrich+video-switcher@gmail.com"
+}
