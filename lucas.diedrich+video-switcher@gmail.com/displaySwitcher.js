@@ -24,8 +24,8 @@ const MODE_PRIMARY 	 = "Primary display only",
 const _prim_exp = "eDP",
 	  _virt_exp = "VIRTUAL";
 
-let _mode, 
-	_primary, 
+let _mode,
+	_primary,
 	_secondary;
 
 /*
@@ -33,6 +33,7 @@ let _mode,
   * TODO: Add comments.
   * TODO: By default we use an Laptop mode, we should have an different class for Desktop mode.
   * TODO: Is the eDP always the onboard display in laptops?
+  *	TODO: Fix bug when 'Second display' is selected, selecting 'Extend' doesnt work.
 */
 function _setMode( mode ) {
 	if(mode != this._getMode() && 
@@ -100,9 +101,10 @@ function _displayGetMode() {
 
 	  		let display = {
 	  			name: ival[0],
-	  			resolution: ival[2].indexOf("(") > -1 ? null :
-	  									ival[2].indexOf("primary") > -1 ? (ival[3].indexOf("(") > -1 ? null : ival[3]) :
-	  									ival[2]
+	  			resolution: ival[2].indexOf("(") > -1 ? 
+	  								null :	ival[2].indexOf("primary") > -1 ? 
+	  										(ival[3].indexOf("(") > -1 ? null : ival[3]) :
+	  										ival[2]
 	  		};
 
 	  		if(display.name.indexOf(_prim_exp) > -1) {
@@ -116,14 +118,18 @@ function _displayGetMode() {
 		if ( !this._primary.resolution )
 			mode = MODE_SECONDARY;
 		else
+		{
 			if ( !this._secondary.resolution )
 				mode = MODE_PRIMARY;
 			else
+			{
 				if ( this._primary.resolution.indexOf("+0+0") > -1 && 
 							this._secondary.resolution.indexOf("+0+0") > -1 ) 
 					mode = MODE_MIRROR;
 				else
 					mode = MODE_EXTEND;
+			}
+		}
 	}
 	return mode;
 }

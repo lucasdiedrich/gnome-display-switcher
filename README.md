@@ -14,7 +14,7 @@ Video Switcher for Gnome-Shell is a Extension for providing a easy and fast way 
 Here goes the process for installation, can be an shell script, trough git, ou zip file. I want to enable this plugin for installation from Gnome-Shell Plugins Websites :
 
 ```sh
-$ wget -O install-gs-video-switcher.sh htts://fromsomewhere/install-gs-video-switcher.sh 
+$ wget -O install-gs-video-switcher.sh https://gitlab.com/lucas-diedrich/video-switcher/install-gs-video-switcher.sh 
 $ chmod + x install-gs-video-switcher.sh 
 $ ./install-gs-video-switcher.sh
 $ rm -f install-gs-video-switcher.sh

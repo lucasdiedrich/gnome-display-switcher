@@ -7,7 +7,7 @@ const St    = imports.gi.St,
       Config  = imports.misc.config,
       ExtensionUtils = imports.misc.extensionUtils,
       Local         = ExtensionUtils.getCurrentExtension(),
-      VideoSwitcher = Local.imports.videoSwitcher, 
+      SUI           = Local.imports.switcherUI, 
       Utils         = Local.imports.utils;
 
 const _shell_version = Config.PACKAGE_VERSION.split('.')[1],
@@ -34,11 +34,11 @@ const DisplayExtension = new Lang.Class({
       this._loadIcon();
     }
     this._settings = settings;
-    this._displayManager = new VideoSwitcher.DisplaySwitcherManager();
+    this._switcherManager = new SUI.SwitcherManager();
   },
 
   _showDisplaySwitcher: function(display, screen, window, binding) {
-    this._displayManager.popup(binding.is_reversed(), 
+    this._switcherManager.popup(binding.is_reversed(), 
                                 binding.get_name(), 
                                 binding.get_mask()); 
   },
@@ -55,32 +55,31 @@ const DisplayExtension = new Lang.Class({
 
   _loadIcon: function() {
       this._topButton = new St.Bin({ style_class: 'panel-button',
-                            reactive: true,
-                            can_focus: true,
-                            x_fill: true,
-                            y_fill: false,
-                            track_hover: true });
-      
-      let icon = new St.Icon({ icon_name: 'preferences-desktop-display-symbolic',
-                               style_class: 'system-status-icon' });
+                                      reactive: true,
+                                      can_focus: false,
+                                      x_fill: true,
+                                      y_fill: false,
+                                      track_hover: false });
 
-      this._topButton.set_child(icon);
-      this._topButton.connect('button-press-event', function(){
-        Utils._showMessage("Video Switcher extension has been loaded");
-      });
+      this._topButton.set_child(new St.Icon({ icon_name: 'preferences-desktop-display-symbolic',
+                                              style_class: 'system-status-icon' }));
       
       Main.panel._rightBox.insert_child_at_index(this._topButton, 0);    
   }
 });
 
-function init() {
+function init() 
+{
 }
 
-function enable() {
-  if( _is_running_X11 ) {
-    if(! _extension) {
+function enable() 
+{
+  if( _is_running_X11 ) 
+  {
+    if( typeof _extension == "undefined" ) 
+    {
       _extension = new DisplayExtension(_show_running_icon, 
-                                        Utils.getSettings(_schema_file));
+                                          Utils.getSettings(_schema_file));
       _extension._loadBinding(_shortcut, _meta_flags, _binding_mode);
     }
   }
