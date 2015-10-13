@@ -13,9 +13,8 @@ const St    = imports.gi.St,
 
 const ExtensionUtils = imports.misc.extensionUtils,
       Local     = ExtensionUtils.getCurrentExtension(),
-      Utils     = Local.imports.utils,
       Display   = Local.imports.displaySwitcher,
-      Gettext   = imports.gettext.domain('gnome-shell-extensions');
+      Gettext   = imports.gettext.domain('gnome-shell-extensions'),
       _         = Gettext.gettext;
       
 const POPUP_APPICON_SIZE = 96,
@@ -68,7 +67,8 @@ const ModesPopup = new Lang.Class({
     Name: 'ModesPopup',
     Extends: SwitcherPopup.SwitcherPopup,
 
-    _init: function(items) {
+    _init: function(items) 
+    {
         this.parent(items);
         this._switcherList = new ModesList(this._items);
     },
@@ -97,7 +97,8 @@ const ModesList = new Lang.Class({
     _init : function(items) 
     {
         this.parent(true);
-        for (let i = 0; i < items.length; i++){
+        for (let i = 0; i < items.length; i++)
+        {
             this._addIcon(items[i]);
         }
     },
@@ -106,10 +107,10 @@ const ModesList = new Lang.Class({
         let box = new St.BoxLayout({ style_class: 'alt-tab-app', vertical: true });
 
         let icon = item.iconActor;
-        if (!icon) {
+        if (!icon)
             icon = new St.Icon({ icon_name: item.iconName,
                                  icon_size: POPUP_APPICON_SIZE });
-        }
+
         box.add(icon, { x_fill: false, y_fill: false } );
 
         let text = new St.Label({ text: item.name });

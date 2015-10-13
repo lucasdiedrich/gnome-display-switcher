@@ -1,9 +1,9 @@
 
-const ExtensionUtils = imports.misc.extensionUtils,
-		GLib 	= imports.gi.GLib,
+const	ExtensionUtils  = imports.misc.extensionUtils,
 		Gio 	= imports.gi.Gio,
-		Local 	= ExtensionUtils.getCurrentExtension(),
-		Utils 	= Local.imports.utils;
+        Lang  	= imports.lang,
+		Local	= ExtensionUtils.getCurrentExtension(),
+		Utils	= Local.imports.utils;
 
 const XRANDR 			= "/usr/bin/xrandr",
 	  CMD_GET_CURRENT 	= XRANDR + ' --current',
@@ -20,7 +20,6 @@ const MODE_PRIMARY 	 = "Primary display only",
 	  MODE_EXTEND 	 = "Primary display and secondary extended",
 	  MODE_SECONDARY = "Secondary display only";
 
-// 
 const _prim_exp = "eDP",
 	  _virt_exp = "VIRTUAL";
 
@@ -35,25 +34,44 @@ let _mode,
   * TODO: Is the eDP always the onboard display in laptops?
   *	TODO: Fix bug when 'Second display' is selected, selecting 'Extend' doesnt work.
 */
-function _setMode( mode ) {
+const Display = new Lang.Class({
+	Name: 'Display',
+    _init: function(name, resolution) 
+    {
+    	this._name = name;
+    	this._resolution = resolution;
+    },
+    getName: function() 
+    {
+    	return this._name;
+    },
+    getResolution: function()
+    {
+    	return this._resolution;
+    }
+});	
+
+function _setMode( mode ) 
+{
 	if(mode != this._getMode() && 
 			typeof mode != 'undefined' && 
-				this._displaySetMode(mode)){
+				this._displaySetMode(mode))
 		this._mode = mode;
-	}
-	return;
 }
 
-function _getMode() {
+function _getMode() 
+{
 	this._mode = this._displayGetMode();
 
 	return this._mode;
 }
 
-function _getModeIndex() {
+function _getModeIndex() 
+{
 	let index = 0;
 
-	switch( this._getMode() ) {
+	switch( this._getMode() ) 
+	{
 		case MODE_MIRROR:
 			index = 1; break;
 		case MODE_EXTEND:
@@ -65,8 +83,8 @@ function _getModeIndex() {
 	return index;
 }
 
-function _displaySetMode(mode) {
-
+function _displaySetMode(mode) 
+{
 	let cmd = CMD_PRIMARY;
 
 	switch(mode) {
@@ -79,65 +97,58 @@ function _displaySetMode(mode) {
 		case MODE_SECONDARY:
 			cmd = CMD_SECONDARY; break;
 	}
-	cmd = cmd.replace("${PRIMARY}", this._primary.name).replace("${SECONDARY}", this._secondary.name);
+	cmd = cmd.replace("${PRIMARY}", this._primary.getName()).replace("${SECONDARY}", this._secondary.getName());
 
-	let result = _run(cmd);
+	let result = Utils._run(cmd);
 	
 	return result.success;
 }
 
-function _displayGetMode() {
+function _displayGetMode() 
+{
 	let mode = MODE_PRIMARY;
-	let result = _run(CMD_GET_CURRENT);
+	let result = Utils._run(CMD_GET_CURRENT);
 	
-	if(result.success) {
+	if( result.success ) 
+	{
 		let lines = result.callback.split("\n");
 		
-		for (let i = 1; i < lines.length -1 ; i++) {
-
+		for (let i = 1; i < lines.length -1 ; i++)
+		{
 			let ival = lines[i].split(" ");
 			
-	    if(ival[1].indexOf("disconnected") < 0 && ival[1].indexOf("connected") > -1) {
+		    if( ival[1].indexOf("disconnected") < 0 && ival[1].indexOf("connected") > -1 ) 
+		    {
+		  		name = ival[0];
+		  		resolution = ival[2].indexOf("(") > -1 ? 
+							 null : ival[2].indexOf("primary") > -1 ? 
+							 (ival[3].indexOf("(") > -1 ? null : ival[3]) : ival[2];
+		  		
+		  		display = new Display(name, resolution);
 
-	  		let display = {
-	  			name: ival[0],
-	  			resolution: ival[2].indexOf("(") > -1 ? 
-	  								null :	ival[2].indexOf("primary") > -1 ? 
-	  										(ival[3].indexOf("(") > -1 ? null : ival[3]) :
-	  										ival[2]
-	  		};
+		  		if( display.getName().indexOf(_prim_exp) > -1 )
+		  			this._primary = display;
+		  		else
+		 			this._secondary = display;
+		    }
+			
 
-	  		if(display.name.indexOf(_prim_exp) > -1) {
-	  			this._primary = display;
-	  		} else {
-			 		this._secondary = display;
-	  		}
-	    }
-		}
-
-		if ( !this._primary.resolution )
-			mode = MODE_SECONDARY;
-		else
-		{
-			if ( !this._secondary.resolution )
-				mode = MODE_PRIMARY;
+			if ( ! this._primary.getResolution() )
+				mode = MODE_SECONDARY;
 			else
 			{
-				if ( this._primary.resolution.indexOf("+0+0") > -1 && 
-							this._secondary.resolution.indexOf("+0+0") > -1 ) 
-					mode = MODE_MIRROR;
+				if ( ! this._secondary.getResolution() )
+					mode = MODE_PRIMARY;
 				else
-					mode = MODE_EXTEND;
+				{
+					if ( this._primary.getResolution().indexOf("+0+0") > -1 && 
+						 this._secondary.getResolution().indexOf("+0+0") > -1 )
+						mode = MODE_MIRROR;
+					else
+						mode = MODE_EXTEND;
+				}
 			}
 		}
 	}
 	return mode;
-}
-
-function _run( command ) {
-
-	let [res, out, err, status] = GLib.spawn_command_line_sync(command, null, null, null, null);
-
-	return {success: res, 
-			callback: out.toString()};
 }

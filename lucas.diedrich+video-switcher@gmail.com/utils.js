@@ -1,25 +1,23 @@
 
-const St    = imports.gi.St,
-    Gio     = imports.gi.Gio,
-    Main    = imports.ui.main,
-    Config  = imports.misc.config,
-    Gettext = imports.gettext,
-    Mainloop = imports.mainloop,
-    ExtensionUtils = imports.misc.extensionUtils,
-    Local   = ExtensionUtils.getCurrentExtension();
+const St       = imports.gi.St,
+      Gio      = imports.gi.Gio,
+      Main     = imports.ui.main,
+      GLib     = imports.gi.GLib,
+      Config   = imports.misc.config,
+      Gettext  = imports.gettext,
+      Mainloop = imports.mainloop,
+      ExtensionUtils = imports.misc.extensionUtils,
+      Local          = ExtensionUtils.getCurrentExtension();
 
-/*
-    TODO: Make this an Class?
-*/
 /**
  * _showMessage:
- * @_text: (obrigatory): the text to show on popup
+ * @text: (obrigatory): the text to show on popup
  *
  * Show an message in a popup on primary display during 1000 miliseconds.
  */
 function _showMessage(_text) {
  
-    let text = _text + " ";
+    let text = _text + "";
     let label = new St.Label({ style_class: 'helloworld-label', text: text });
     let monitor = Main.layoutManager.primaryMonitor;
 
@@ -31,6 +29,23 @@ function _showMessage(_text) {
     Mainloop.timeout_add(1000, function () { 
       label.destroy(); 
     });
+}
+
+/**
+ * _run:
+ * @command: (obrigatory): The command to run on shell.
+ *
+ * Run an command passed by parameter and return the result containing the @success and @callback.
+ *
+ * Return: Result.{success  - True or False, if the command runned succefully or not. 
+ *                 callback - The return of the executed command}
+ */
+function _run( command ) {
+
+    let [res, out, err, status] = GLib.spawn_command_line_sync(command, null, null, null, null);
+
+    return {success: res, 
+            callback: out.toString()};
 }
 
 /**

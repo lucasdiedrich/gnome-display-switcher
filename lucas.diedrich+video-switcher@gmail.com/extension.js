@@ -68,16 +68,12 @@ const DisplayExtension = new Lang.Class({
   }
 });
 
-function init() 
-{
+function init() {
 }
 
-function enable() 
-{
-  if( _is_running_X11 ) 
-  {
-    if( typeof _extension == "undefined" ) 
-    {
+function enable() {
+  if( _is_running_X11 ) {
+    if( typeof _extension == "undefined" ) {
       _extension = new DisplayExtension(_show_running_icon, 
                                           Utils.getSettings(_schema_file));
       _extension._loadBinding(_shortcut, _meta_flags, _binding_mode);
