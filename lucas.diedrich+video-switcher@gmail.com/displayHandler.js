@@ -21,7 +21,8 @@ const MODE_PRIMARY 	 = "Primary display only",
 
 const EXP_EDP  = "eDP",
 	  EXP_VIRT = "VIRTUAL",
-	  EXP_DISC = "disconnected";
+	  EXP_DISC = "disconnected",
+	  EXP_MIRROR = "+0+0";
 
 /*
   TODO: Add MODES Classes
@@ -35,7 +36,7 @@ const Display = new Lang.Class({
     	this._name 		 = name;
     	this._resolution = resolution;
     	this._connected  = connected;
-    	this._marked 	 = marked_primary; //Used for non laptop mode
+    	this._marked 	 = marked_primary;
     },
     _getName: function()
     {
@@ -107,8 +108,8 @@ const DisplayHandler = new Lang.Class({
 				mode = MODE_SECONDARY;
 			else
 			{
-				if ( this._primary._getResolution().indexOf("+0+0") > -1 && 
-					 this._secondary._getResolution().indexOf("+0+0") > -1 )
+				if ( this._primary._getResolution().indexOf(EXP_MIRROR) > -1 && 
+					 this._secondary._getResolution().indexOf(EXP_MIRROR) > -1 )
 					mode = MODE_MIRROR;
 				else
 					mode = MODE_EXTEND;
