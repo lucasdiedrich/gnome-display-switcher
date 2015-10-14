@@ -11,18 +11,17 @@ const St    = imports.gi.St,
       Utils         = Local.imports.utils;
 
 const _shell_version = Config.PACKAGE_VERSION.split('.')[1],
-      _schema_file = "org.gnome.shell.extensions.video-switcher",
-      _shortcut   = "shortcut-switch",
-      _meta_flags = Meta.KeyBindingFlags.NONE,
-      _show_running_icon = true,
-      _is_running_X11 = true,
-      _binding_mode = _shell_version <= 14 ? Shell.KeyBindingMode.NORMAL : Shell.ActionMode.NORMAL;
+      _schema_file   = "org.gnome.shell.extensions.video-switcher",
+      _shortcut      = "shortcut-switch",
+      _meta_flags    = Meta.KeyBindingFlags.NONE,
+      _is_wayland    = Meta.is_wayland_compositor(),
+      _binding_mode  = _shell_version <= 14 ? Shell.KeyBindingMode.NORMAL : Shell.ActionMode.NORMAL,
+      _show_running_icon = false;
 
 let _extension;
 
 /*
   TODO: Add comments.
-  TODO: Implement X11/Wayland verification, this extension should work with X11 so far
   journalctl /usr/bin/gnome-session -f -o cat - Just for debugging 
 */
 const DisplayExtension = new Lang.Class({
@@ -46,7 +45,6 @@ const DisplayExtension = new Lang.Class({
                                 binding.get_name(), 
                                 binding.get_mask()); 
   },
-  
   _loadBinding: function() 
   {
     Main.wm.addKeybinding(
@@ -82,7 +80,7 @@ function init()
 
 function enable() 
 {
-  if( _is_running_X11 ) 
+  if( !_is_wayland ) 
     if( typeof _extension === 'undefined' ) 
       _extension = new DisplayExtension(Utils.getSettings(_schema_file));
 }

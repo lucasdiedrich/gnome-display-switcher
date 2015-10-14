@@ -20,8 +20,9 @@ const MODE_PRIMARY 	 = "Primary display only",
 	  MODE_EXTEND 	 = "Primary display and secondary extended",
 	  MODE_SECONDARY = "Secondary display only";
 
-const _prim_exp = "eDP",
-	  _virt_exp = "VIRTUAL";
+const EXP_EDP  = "eDP",
+	  EXP_VIRT = "VIRTUAL",
+	  EXP_DISC = "disconnected";
 
 /*
   TODO: Add MODES Classes
@@ -31,10 +32,10 @@ const Display = new Lang.Class({
 	Name: 'Display',
     _init: function(name, resolution, connected, marked_primary) 
     {
-    	this._name = name;
+    	this._name 		 = name;
     	this._resolution = resolution;
-    	this._connected = connected;
-    	this._marked = marked_primary; //Used for non laptop mode
+    	this._connected  = connected;
+    	this._marked 	 = marked_primary; //Used for non laptop mode
     },
     _getName: function()
     {
@@ -46,7 +47,7 @@ const Display = new Lang.Class({
     },
     _isConnected: function()
     {
-    	return (this._connected.indexOf("disconnected") < 0);
+    	return (this._connected.indexOf(EXP_DISC) < 0);
     },
     _isMarked: function()
     {
@@ -94,10 +95,8 @@ const DisplayHandler = new Lang.Class({
 
 		this._reload();
 
-		//TODO: We should verify if we could get the primary monitor, 
-		// 		if doesnt we cant do nothing.
-		// if( this._primary == null)
-		// 	return; 
+		if( this._primary == null)
+			throw new Error("Sorry, we could not discover the primary display monitor.");			
 
 		if ( this._secondary == null || 
 				!this._secondary._getResolution() )
@@ -120,9 +119,11 @@ const DisplayHandler = new Lang.Class({
 	},
 	_displaySetMode: function(mode)
 	{
-		let cmd = CMD_PRIMARY;
+		let cmd,
+			result;
 
-		switch(mode) {
+		switch(mode) 
+		{
 			case MODE_PRIMARY:
 				cmd = CMD_PRIMARY; break;
 			case MODE_MIRROR:
@@ -132,9 +133,11 @@ const DisplayHandler = new Lang.Class({
 			case MODE_SECONDARY:
 				cmd = CMD_SECONDARY; break;
 		}
-		cmd = cmd.replace(/\#PRIMARY/g, this._primary._getName()).replace(/\#SECONDARY/g, this._secondary._getName());
 
-		let result = Utils._run(cmd);
+		cmd = cmd.replace(/\#PRIMARY/g, this._primary._getName())
+				 .replace(/\#SECONDARY/g, this._secondary._getName());
+
+		result = Utils._run(cmd);
 		
 		return result.success;
 	},
@@ -177,12 +180,13 @@ const DisplayHandler = new Lang.Class({
 			{		
 				if (display._isConnected()) 
 				{
-					if (display._getName().indexOf(_prim_exp) > -1 )
+					//Verify if the name start with eDP, so its na laptop.
+					if (display._getName().indexOf(EXP_EDP) > -1 )
 					{
 						this._primary = display;
 						this._is_desktop = false;
 			 		} 
-			 		else 
+			 		else
 			 		{
 						if(this._is_desktop && display._isMarked()) 
 				  			this._primary = display;
@@ -191,10 +195,10 @@ const DisplayHandler = new Lang.Class({
 			 		}
 				}
 			}
-		} 
+		}
 		else 
 		{
-			//TODO: Should rise an Error here because an error has ocurrent while running xrandr.
+			throw new Error("Sorry, for some reason we could not execute the following command: " + CMD_GET_CURRENT);
 		}
 	}
 });

@@ -14,6 +14,7 @@ const St       = imports.gi.St,
  * @text: (obrigatory): the text to show on popup
  *
  * Show an message in a popup on primary display during 1000 miliseconds.
+ * Probably will be removed as soon as possible.
  */
 function _showMessage(_text) {
  
@@ -39,14 +40,23 @@ function _showMessage(_text) {
  *
  * Return: Result.{success  - True or False, if the command runned succefully or not. 
  *                 callback - The return of the executed command}
- *  TODO: Should add and exception handler.
  */
-function _run( command ) {
+function _run( command ) 
+{
+    let result;
 
-    let [res, out, err, status] = GLib.spawn_command_line_sync(command, null, null, null, null);
+    try 
+    {
+      let [res, out, err, status] = GLib.spawn_command_line_sync(command, null, null, null, null);
+      
+      result = {success: res, callback: out.toString()};
+    } 
+    catch (e) 
+    {
+      result = {success: false, callback: "ERROR"};      
+    }
 
-    return {success: res, 
-            callback: out.toString()};
+    return result;
 }
 
 /**
@@ -56,8 +66,8 @@ function _run( command ) {
  * Initialize Gettext to load translations from extensionsdir/locale.
  * If @domain is not provided, it will be taken from metadata['gettext-domain']
  */
-function initTranslations(domain) {
-
+function initTranslations(domain) 
+{
     domain = domain || extension.metadata['gettext-domain'];
 
     // check if this extension was built with "make zip-file", and thus
@@ -80,8 +90,8 @@ function initTranslations(domain) {
  * metadata['settings-schema'].
  *
  */
-function getSettings(schema) {
-
+function getSettings(schema) 
+{
     schema = schema || Local.metadata['settings-schema']
 
     const GioSSS = Gio.SettingsSchemaSource;
@@ -97,7 +107,8 @@ function getSettings(schema) {
 
     let schemaObj = schemaSource.lookup(schema, true);
 
-    if (!schemaObj) {
+    if (!schemaObj) 
+    {
         throw new Error('Schema ' + schema + ' could not be found for extension '
                           + Local.metadata.uuid + '. Please check your installation.');
     }

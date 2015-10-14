@@ -26,7 +26,8 @@ let _displayHandler;
     TODO: Each kind of mode should have its own ICON
     TODO: Names of kinds of mode should be in PO file
     TODO: On 'Extend' hover should show another popup with extend options
-    TODO: Verify how many displays are disposible, if only one show the current display.    
+    TODO: Verify how many displays are disposible, if only one show the current display.
+    TODO: When user release the "Super" key, the POPUP should hold open.
 */
 const SwitcherManager = new Lang.Class({
     Name: 'SwitcherManager',
