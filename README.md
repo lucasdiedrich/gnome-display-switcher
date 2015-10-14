@@ -5,20 +5,16 @@ Display Switcher for Gnome-shell is a extension for providing a easy and fast wa
   - Fast way to select display monitors
   - You can choose what you want and not just pressing praying for it.
 
-### Changelog
+### Version 
 
-0.2 - Add supported for Desktops.
-	- Better code organization and sintaxes.
-	- Fix bugs.
-
-0.1 - First working version.
+[0.3 - Changelog](https://gitlab.com/lucas-diedrich/video-switcher/blob/master/CHANGELOG.md)
 
 ### Installation
 
 Here goes the process for installation, can be an shell script, trough git, ou zip file. I want to enable this plugin for installation from Gnome-shell Plugins Websites :
 
 ```sh
-$ wget -O install-gs-video-switcher.sh https://gitlab.com/lucas-diedrich/video-switcher/install-gs-video-switcher.sh 
+$ wget -O install-gs-video-switcher.sh https://gitlab.com/lucas-diedrich/video-switcher/blob/master/install-gs-video-switcher.sh 
 $ chmod + x install-gs-video-switcher.sh 
 $ ./install-gs-video-switcher.sh
 $ rm -f install-gs-video-switcher.sh
@@ -26,13 +22,14 @@ $ rm -f install-gs-video-switcher.sh
 
 ### Development
 
-Want to contribute? Great! Just download, dev, and make a pull request;
+Want to contribute? Great! Just download, dev, and make a push request. If you cant, just give ideas.
+
+[Contribution Guide](https://gitlab.com/lucas-diedrich/video-switcher/blob/master/CONTRIBUTING.md)
 
 ### Todos
 
  - Fix the TODOS on source code
- - Make regression over Gnome-shell 3.12+
- - Try to test over Ubuntu, Fedora and Open-Suse
+ - Try to test over Ubuntu, Fedora and Open-suse
 
 ###	Thanks
 
@@ -52,13 +49,12 @@ This extension couldn't be done without some help of some people and principle t
 
 And "feborges", "Jasper" from gnome-shell IRC.
 
+
 License
 ----
 
-MIT
+[MIT License](https://gitlab.com/lucas-diedrich/video-switcher/blob/master/LICENSE)
 
-
-**Free Software, Hell Yeah!**
 
 
 
