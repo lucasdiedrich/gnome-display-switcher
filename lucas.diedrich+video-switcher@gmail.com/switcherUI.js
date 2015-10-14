@@ -1,13 +1,6 @@
 
 const St    = imports.gi.St,
-      Gio   = imports.gi.Gio,
-      Gtk   = imports.gi.Gtk,
-      Meta  = imports.gi.Meta,
-      Main  = imports.ui.main,
       Lang  = imports.lang,
-      Shell     = imports.gi.Shell,
-      Params    = imports.misc.params,
-      Tweener   = imports.ui.tweener,
       Clutter   = imports.gi.Clutter,
       SwitcherPopup = imports.ui.switcherPopup;
 
@@ -21,13 +14,14 @@ const POPUP_APPICON_SIZE = 96,
       POPUP_FADE_TIME    = 0.1;
 
 let _displayHandler;
+
 /*
     TODO: Add comments.
     TODO: Each kind of mode should have its own ICON
     TODO: Names of kinds of mode should be in PO file
     TODO: On 'Extend' hover should show another popup with extend options
     TODO: Verify how many displays are disposible, if only one show the current display.
-    TODO: When user release the "Super" key, the POPUP should hold open.
+    TODO: When user release the "Super" key, the POPUP should hold opened.
 */
 const SwitcherManager = new Lang.Class({
     Name: 'SwitcherManager',
@@ -67,6 +61,19 @@ const SwitcherManager = new Lang.Class({
                                           this._popup = null;
                                       }));
         }
+    },
+    getIcon: function()
+    {
+        let icon = new St.Bin({ style_class: 'panel-button',
+                                      reactive: true,
+                                      can_focus: false,
+                                      x_fill: true,
+                                      y_fill: false,
+                                      track_hover: false });
+
+        icon.set_child(new St.Icon({ icon_name: 'preferences-desktop-display-symbolic',
+                                      style_class: 'system-status-icon' }));
+        return icon;
     }
 });
 
@@ -111,7 +118,7 @@ const ModesList = new Lang.Class({
     },
     _addIcon : function(item) 
     {
-        let box = new St.BoxLayout({ style_class: 'alt-tab-app', vertical: true });
+        let box = new St.BoxLayout({ style_class: 'display-switcher-app', vertical: true });
 
         let icon = item.iconActor;
         if (!icon)

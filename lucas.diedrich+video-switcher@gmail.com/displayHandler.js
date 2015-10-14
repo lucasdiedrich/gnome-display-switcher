@@ -1,6 +1,5 @@
 
 const	ExtensionUtils  = imports.misc.extensionUtils,
-		Gio 	= imports.gi.Gio,
         Lang  	= imports.lang,
 		Local	= ExtensionUtils.getCurrentExtension(),
 		Utils	= Local.imports.utils;
@@ -26,6 +25,7 @@ const EXP_EDP  = "eDP",
 
 /*
   TODO: Add MODES Classes
+  TODO: Add change between extended modes;
   TODO: Add comments.
 */
 const Display = new Lang.Class({

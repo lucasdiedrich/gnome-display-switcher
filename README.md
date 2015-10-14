@@ -53,7 +53,7 @@ And "feborges", "Jasper" from gnome-shell IRC.
 License
 ----
 
-[MIT License](https://gitlab.com/lucas-diedrich/video-switcher/blob/master/LICENSE)
+[MIT](https://gitlab.com/lucas-diedrich/video-switcher/blob/master/LICENSE)
 
 
 

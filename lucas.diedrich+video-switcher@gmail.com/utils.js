@@ -9,6 +9,8 @@ const St       = imports.gi.St,
       ExtensionUtils = imports.misc.extensionUtils,
       Local          = ExtensionUtils.getCurrentExtension();
       
+let   _theme = imports.gi.Gtk.IconTheme.get_default();
+
 /**
  * _showMessage:
  * @text: (obrigatory): the text to show on popup
@@ -19,7 +21,7 @@ const St       = imports.gi.St,
 function _showMessage(_text) {
  
     let text = _text + "";
-    let label = new St.Label({ style_class: 'helloworld-label', text: text });
+    let label = new St.Label({ style_class: 'message-label', text: text });
     let monitor = Main.layoutManager.primaryMonitor;
 
     global.stage.add_actor(label);
@@ -60,15 +62,15 @@ function _run( command )
 }
 
 /**
- * initTranslations:
+ * _initTranslations:
  * @domain: (optional): the gettext domain to use
  *
  * Initialize Gettext to load translations from extensionsdir/locale.
  * If @domain is not provided, it will be taken from metadata['gettext-domain']
  */
-function initTranslations(domain) 
+function _initTranslations(domain) 
 {
-    domain = domain || extension.metadata['gettext-domain'];
+    domain = domain || Local.metadata['gettext-domain'];
 
     // check if this extension was built with "make zip-file", and thus
     // has the locale files in a subfolder
@@ -82,7 +84,18 @@ function initTranslations(domain)
 }
 
 /**
- * getSettings:
+ * _initTheme:
+ *
+ * Initialize extensionsdir/icons to default theme from gnome,
+ * this lets us load the custom SVG files for popup modes.
+ */
+function _initTheme() 
+{
+    _theme.append_search_path(Local.path + '/icons');
+}
+
+/**
+ * _getSettings:
  * @schema: (optional): the GSettings schema id
  *
  * Builds and return a GSettings schema for @schema, using schema files
@@ -90,7 +103,7 @@ function initTranslations(domain)
  * metadata['settings-schema'].
  *
  */
-function getSettings(schema) 
+function _getSettings(schema) 
 {
     schema = schema || Local.metadata['settings-schema']
 
