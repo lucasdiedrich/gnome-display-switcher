@@ -1,11 +1,12 @@
-# Video Switcher for Gnome-Shell
+# Gnome-shell - Display Switcher Extension
 
-Video Switcher for Gnome-Shell is a Extension for providing a easy and fast way to switch your videos monitor. This extension is based on what Microsoft Windows 10 (Super+p) shortcut.
+Display Switcher for Gnome-shell is a extension for providing a easy and fast way to switch your display monitors. This extension is based on what Microsoft Windows 10 (Super+p) shortcut.
 
-  - Fast way to select video monitor
+  - Fast way to select display monitors
   - You can choose what you want and not just pressing praying for it.
 
-### Version
+### Changelog
+
 0.2 - Add supported for Desktops.
 	- Better code organization and sintaxes.
 	- Fix bugs.
@@ -14,7 +15,7 @@ Video Switcher for Gnome-Shell is a Extension for providing a easy and fast way 
 
 ### Installation
 
-Here goes the process for installation, can be an shell script, trough git, ou zip file. I want to enable this plugin for installation from Gnome-Shell Plugins Websites :
+Here goes the process for installation, can be an shell script, trough git, ou zip file. I want to enable this plugin for installation from Gnome-shell Plugins Websites :
 
 ```sh
 $ wget -O install-gs-video-switcher.sh https://gitlab.com/lucas-diedrich/video-switcher/install-gs-video-switcher.sh 
@@ -49,7 +50,7 @@ This extension couldn't be done without some help of some people and principle t
 
  - Gnome-shell source code
 
-And "feborges" from gnome-shell IRC.
+And "feborges", "Jasper" from gnome-shell IRC.
 
 License
 ----
