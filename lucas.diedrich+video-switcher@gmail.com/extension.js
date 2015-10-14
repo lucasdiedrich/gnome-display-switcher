@@ -29,31 +29,37 @@ let _extension;
 const DisplayExtension = new Lang.Class({
   Name: 'DisplayExtension',
 
-  _init: function(_icon_enabled, settings) {
-    if (_icon_enabled) {
+  _init: function(settings) 
+  {
+    if ( _show_running_icon ) 
+    {
       this._loadIcon();
     }
+
     this._settings = settings;
     this._switcherManager = new SUI.SwitcherManager();
+    this._loadBinding();
   },
 
-  _showDisplaySwitcher: function(display, screen, window, binding) {
+  _showDisplaySwitcher: function(display, screen, window, binding) 
+  {
     this._switcherManager.popup(binding.is_reversed(), 
                                 binding.get_name(), 
                                 binding.get_mask()); 
   },
-
-  _loadBinding: function(shortcut, meta_flags, binding_mode) {
+  
+  _loadBinding: function() 
+  {
     Main.wm.addKeybinding(
-          shortcut,
+          _shortcut,
           this._settings,
-          meta_flags,
-          binding_mode,
+          _meta_flags,
+          _binding_mode,
           Lang.bind(this, this._showDisplaySwitcher)
     );
   },
-
-  _loadIcon: function() {
+  _loadIcon: function() 
+  {
       this._topButton = new St.Bin({ style_class: 'panel-button',
                                       reactive: true,
                                       can_focus: false,
@@ -65,22 +71,25 @@ const DisplayExtension = new Lang.Class({
                                               style_class: 'system-status-icon' }));
       
       Main.panel._rightBox.insert_child_at_index(this._topButton, 0);    
+  },
+  _destroy: function(){
+    //TODO: Unload all stuff and destroy objects
   }
 });
 
-function init() {
+function init() 
+{
 }
 
-function enable() {
-  if( _is_running_X11 ) {
-    if( typeof _extension == "undefined" ) {
-      _extension = new DisplayExtension(_show_running_icon, 
-                                          Utils.getSettings(_schema_file));
-      _extension._loadBinding(_shortcut, _meta_flags, _binding_mode);
-    }
-  }
+function enable() 
+{
+  if( _is_running_X11 ) 
+    if( _extension == null ) 
+      _extension = new DisplayExtension(Utils.getSettings(_schema_file));
 }
 
-function disable() {
+function disable() 
+{
+  _extension._destroy();
   _extension = null;
 }

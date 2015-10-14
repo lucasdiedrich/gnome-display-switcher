@@ -36,26 +36,43 @@ let _mode,
 */
 const Display = new Lang.Class({
 	Name: 'Display',
-    _init: function(name, resolution) 
+    _init: function(name, resolution, connected, marked_primary) 
     {
     	this._name = name;
     	this._resolution = resolution;
+    	this._connected = connected;
+    	this._marked = marked_primary; //Used for non laptop mode
     },
-    getName: function() 
+    _getName: function() 
     {
     	return this._name;
     },
-    getResolution: function()
+    _getResolution: function()
     {
     	return this._resolution;
+    },
+    _isConnected: function()
+    {
+    	return (this._connected.indexOf("disconnected") < 0);
+    },
+    _isMarked: function()
+    {
+    	return this._marked;
     }
 });	
 
+//TODO: Add all possibles methods inside here, and separate DisplayModes.
+const DisplayHandler = new Lang.Class({
+	Name: 'DisplayHandler',
+    _init: function() 
+    {
+    }
+});
+
 function _setMode( mode ) 
 {
-	if(mode != this._getMode() && 
-			typeof mode != 'undefined' && 
-				this._displaySetMode(mode))
+	if(mode != null && mode != this._getMode() 
+		&& this._displaySetMode(mode))
 		this._mode = mode;
 }
 
@@ -66,7 +83,7 @@ function _getMode()
 	return this._mode;
 }
 
-function _getModeIndex() 
+function _getIndex() 
 {
 	let index = 0;
 
@@ -97,58 +114,93 @@ function _displaySetMode(mode)
 		case MODE_SECONDARY:
 			cmd = CMD_SECONDARY; break;
 	}
-	cmd = cmd.replace("${PRIMARY}", this._primary.getName()).replace("${SECONDARY}", this._secondary.getName());
+	cmd = cmd.replace("${PRIMARY}", this._primary._getName()).replace("${SECONDARY}", this._secondary._getName());
 
 	let result = Utils._run(cmd);
 	
 	return result.success;
 }
 
-function _displayGetMode() 
+function _parseDisplays(callback) 
 {
-	let mode = MODE_PRIMARY;
+	let lines 	 = callback.split("\n"),
+		displays = [];
+	
+	for (let i = 1; i < lines.length -1; i++)
+	{
+		//Starts if string for ignore resolution variables.
+		if ( lines[i].match("^[A-Za-z]") )  
+		{
+			let ival = lines[i].split(" ");
+
+			name 			= ival[0];
+			connected 		= ival[1];
+			marked_primary  = ival[2].indexOf("primary") > -1 ? true : false;
+			resolution 		= ival[2].indexOf("(") > -1 ? 
+						 		null : ival[2].indexOf("primary") > -1 ? 
+						 		(ival[3].indexOf("(") > -1 ? null : ival[3]) : ival[2];
+			
+			displays.push(new Display(name, resolution, connected, marked_primary));
+		}
+	}
+
+	return displays;
+}
+
+function _loadDisplays()
+{
 	let result = Utils._run(CMD_GET_CURRENT);
 	
 	if( result.success ) 
 	{
-		let lines = result.callback.split("\n");
-		
-		for (let i = 1; i < lines.length -1 ; i++)
-		{
-			let ival = lines[i].split(" ");
-			
-		    if( ival[1].indexOf("disconnected") < 0 && ival[1].indexOf("connected") > -1 ) 
-		    {
-		  		name = ival[0];
-		  		resolution = ival[2].indexOf("(") > -1 ? 
-							 null : ival[2].indexOf("primary") > -1 ? 
-							 (ival[3].indexOf("(") > -1 ? null : ival[3]) : ival[2];
-		  		
-		  		display = new Display(name, resolution);
+		let displays = this._parseDisplays(result.callback);
 
-		  		if( display.getName().indexOf(_prim_exp) > -1 )
-		  			this._primary = display;
-		  		else
-		 			this._secondary = display;
-		    }
-			
-
-			if ( ! this._primary.getResolution() )
-				mode = MODE_SECONDARY;
-			else
+		for each (let display in displays)
+		{		
+			if (display._isConnected()) 
 			{
-				if ( ! this._secondary.getResolution() )
-					mode = MODE_PRIMARY;
-				else
-				{
-					if ( this._primary.getResolution().indexOf("+0+0") > -1 && 
-						 this._secondary.getResolution().indexOf("+0+0") > -1 )
-						mode = MODE_MIRROR;
-					else
-						mode = MODE_EXTEND;
-				}
+				// TODO: This should be different at Desktops,
+				//			this only works on laptop.
+				if( display._getName().indexOf(_prim_exp) > -1 )
+		  			this._primary = display;
+			  	else
+		 			this._secondary = display;
 			}
 		}
+	} 
+	else 
+	{
+		//TODO: Should rise an Error here because an error has ocurrent while running xrandr.
 	}
+}
+
+function _displayGetMode() 
+{
+	_loadDisplays();
+
+	let mode;
+
+	//TODO: We should verify if we could get the primary monitor, 
+	// 		if doesnt we cant do nothing.
+	// if( this._primary == null)
+	// 	return; 
+
+	if ( this._secondary == null || 
+			!this._secondary._getResolution() )
+		mode = MODE_PRIMARY;
+	else
+	{
+		if ( ! this._primary._getResolution() )
+			mode = MODE_SECONDARY;
+		else
+		{
+			if ( this._primary._getResolution().indexOf("+0+0") > -1 && 
+				 this._secondary._getResolution().indexOf("+0+0") > -1 )
+				mode = MODE_MIRROR;
+			else
+				mode = MODE_EXTEND;
+		}
+	}
+
 	return mode;
 }

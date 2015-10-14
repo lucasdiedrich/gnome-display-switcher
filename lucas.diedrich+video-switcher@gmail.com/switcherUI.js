@@ -53,7 +53,7 @@ const SwitcherManager = new Lang.Class({
             this._popup = new ModesPopup(this._items);
 
             this._popup.show(backward, binding, mask);
-            this._popup._select(Display._getModeIndex());
+            this._popup._select(Display._getIndex());
 
             this._popup.actor.connect('destroy',
                                       Lang.bind(this, function() {
