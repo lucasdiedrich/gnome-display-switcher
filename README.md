@@ -4,9 +4,12 @@ Video Switcher for Gnome-Shell is a Extension for providing a easy and fast way 
 
   - Fast way to select video monitor
   - You can choose what you want and not just pressing praying for it.
-  - Magic
 
 ### Version
+0.2 - Add supported for Desktops.
+	- Better code organization and sintaxes.
+	- Fix bugs.
+
 0.1 - First working version.
 
 ### Installation
@@ -26,11 +29,9 @@ Want to contribute? Great! Just download, dev, and make a pull request;
 
 ### Todos
 
- - Add Code Comments
  - Fix the TODOS on source code
- - Make regression over Gnome-shell 3.10+
+ - Make regression over Gnome-shell 3.12+
  - Try to test over Ubuntu, Fedora and Open-Suse
- - Make it Work!
 
 ###	Thanks
 
@@ -48,7 +49,7 @@ This extension couldn't be done without some help of some people and principle t
 
  - Gnome-shell source code
 
-And a very special thanks for "feborges" who gave me some north on gnome-shell extension development over gnome-shell IRC.
+And "feborges" from gnome-shell IRC.
 
 License
 ----

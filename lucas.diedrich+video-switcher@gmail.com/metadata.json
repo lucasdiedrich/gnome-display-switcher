@@ -1,7 +1,7 @@
 {
 	"name": "Video Switcher",
 	"description": "Manage display settings using xRandr", 
-	"shell-version": ["3.14","3.16"], 
+	"shell-version": ["3.14","3.16","3.18"], 
 	"uuid": "lucas.diedrich+video-switcher@gmail.com",
-	"version": "0.1"
+	"version": "0.2"
 }

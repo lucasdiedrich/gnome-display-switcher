@@ -8,7 +8,7 @@ const St       = imports.gi.St,
       Mainloop = imports.mainloop,
       ExtensionUtils = imports.misc.extensionUtils,
       Local          = ExtensionUtils.getCurrentExtension();
-
+      
 /**
  * _showMessage:
  * @text: (obrigatory): the text to show on popup
@@ -39,6 +39,7 @@ function _showMessage(_text) {
  *
  * Return: Result.{success  - True or False, if the command runned succefully or not. 
  *                 callback - The return of the executed command}
+ *  TODO: Should add and exception handler.
  */
 function _run( command ) {
 

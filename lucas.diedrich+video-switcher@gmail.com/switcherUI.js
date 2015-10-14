@@ -13,13 +13,14 @@ const St    = imports.gi.St,
 
 const ExtensionUtils = imports.misc.extensionUtils,
       Local     = ExtensionUtils.getCurrentExtension(),
-      Display   = Local.imports.displaySwitcher,
+      Display   = Local.imports.displayHandler,
       Gettext   = imports.gettext.domain('gnome-shell-extensions'),
       _         = Gettext.gettext;
       
 const POPUP_APPICON_SIZE = 96,
       POPUP_FADE_TIME    = 0.1;
-      
+
+let _displayHandler;
 /*
     TODO: Add comments.
     TODO: Each kind of mode should have its own ICON
@@ -32,20 +33,25 @@ const SwitcherManager = new Lang.Class({
 
     _init: function() 
     {
-        this._items = [
-            { name: "Primary display",
-                iconName: "video-display-symbolic",
-                mode: Display.MODE_PRIMARY},
-            { name: "Mirror",
-                iconName: "video-display-symbolic",
-                mode: Display.MODE_MIRROR },
-            { name: "Extend",
-                iconName: "video-display-symbolic",
-                mode: Display.MODE_EXTEND },
-            { name: "Second display",
-                iconName: "video-display-symbolic",
-                mode: Display.MODE_SECONDARY }
-        ];
+      if( _displayHandler == null || 
+          typeof _displayHandler === 'undefined' )
+        _displayHandler = new Display.DisplayHandler();
+      
+      //TODO: This itens should come from DisplayHandler;
+      this._items = [
+          { name: "Primary display",
+              iconName: "video-display-symbolic",
+              mode: Display.MODE_PRIMARY},
+          { name: "Mirror",
+              iconName: "video-display-symbolic",
+              mode: Display.MODE_MIRROR },
+          { name: "Extend",
+              iconName: "video-display-symbolic",
+              mode: Display.MODE_EXTEND },
+          { name: "Second display",
+              iconName: "video-display-symbolic",
+              mode: Display.MODE_SECONDARY }
+      ];
     },
     popup: function(backward, binding, mask) 
     {
@@ -53,7 +59,7 @@ const SwitcherManager = new Lang.Class({
             this._popup = new ModesPopup(this._items);
 
             this._popup.show(backward, binding, mask);
-            this._popup._select(Display._getIndex());
+            this._popup._select(_displayHandler._getIndex());
 
             this._popup.actor.connect('destroy',
                                       Lang.bind(this, function() {
@@ -86,7 +92,7 @@ const ModesPopup = new Lang.Class({
     _finish : function(time) 
     {
         this.parent(time);
-        Display._setMode(this._items[this._selectedIndex].mode)
+        _displayHandler._setMode(this._items[this._selectedIndex].mode);
     }
 });
 

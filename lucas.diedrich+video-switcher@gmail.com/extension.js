@@ -16,7 +16,6 @@ const _shell_version = Config.PACKAGE_VERSION.split('.')[1],
       _meta_flags = Meta.KeyBindingFlags.NONE,
       _show_running_icon = true,
       _is_running_X11 = true,
-      _is_laptop_mode = true,
       _binding_mode = _shell_version <= 14 ? Shell.KeyBindingMode.NORMAL : Shell.ActionMode.NORMAL;
 
 let _extension;
@@ -24,7 +23,7 @@ let _extension;
 /*
   TODO: Add comments.
   TODO: Implement X11/Wayland verification, this extension should work with X11 so far
-  TODO: Implement Laptop/Desktop verification  
+  journalctl /usr/bin/gnome-session -f -o cat - Just for debugging 
 */
 const DisplayExtension = new Lang.Class({
   Name: 'DisplayExtension',
@@ -84,7 +83,7 @@ function init()
 function enable() 
 {
   if( _is_running_X11 ) 
-    if( _extension == null ) 
+    if( typeof _extension === 'undefined' ) 
       _extension = new DisplayExtension(Utils.getSettings(_schema_file));
 }
 
