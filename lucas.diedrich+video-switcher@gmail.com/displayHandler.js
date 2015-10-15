@@ -1,34 +1,63 @@
 
-const	ExtensionUtils  = imports.misc.extensionUtils,
+const 	ExtensionUtils  = imports.misc.extensionUtils,
         Lang  	= imports.lang,
 		Local	= ExtensionUtils.getCurrentExtension(),
 		Utils	= Local.imports.utils;
 
-const XRANDR 			= "/usr/bin/xrandr",
-	  CMD_GET_CURRENT 	= XRANDR + ' --current',
-	  CMD_PRIMARY 		= XRANDR + ' --output #SECONDARY --off --output #PRIMARY --auto',
-	  CMD_SECONDARY 	= XRANDR + ' --output #SECONDARY --auto --output #PRIMARY --off',
-	  CMD_MIRROR 		= XRANDR + ' --output #PRIMARY --auto --output #SECONDARY --auto --same-as #PRIMARY',
-	  CMD_EXTEND_LEFT 	= XRANDR + ' --output #PRIMARY --auto --output #SECONDARY --auto --left-of #PRIMARY',
-	  CMD_EXTEND_RIGHT  = XRANDR + ' --output #PRIMARY --auto --output #SECONDARY --auto --right-of #PRIMARY',
-	  CMD_EXTEND_TOP 	= XRANDR + ' --output #PRIMARY --auto --output #SECONDARY --auto --top-of #PRIMARY',
-	  CMD_EXTEND_BOTTOM = XRANDR + ' --output #PRIMARY --auto --output #SECONDARY --auto --bottom-of #PRIMARY';
+const Gettext = imports.gettext.domain(Local.metadata['gettext-domain']);
+const _ = Gettext.gettext;
 
-const MODE_PRIMARY 	 = "Primary display only",
-	  MODE_MIRROR 	 = "Primary display and secondary mirrored",
-	  MODE_EXTEND 	 = "Primary display and secondary extended",
-	  MODE_SECONDARY = "Secondary display only";
+
+const XRANDR 			= Utils._getXRandr(),
+	  PRIM_AUTO			= "	--output #PRIMARY --auto",
+	  SECO_AUTO			= " --output #SECONDARY --auto",
+	  CMD_GET_CURRENT 	= XRANDR + ' --current',
+	  CMD_PRIMARY 		= XRANDR + PRIM_AUTO + ' --output #SECONDARY --off',
+	  CMD_SECONDARY 	= XRANDR + SECO_AUTO + ' --output #PRIMARY --off',
+	  CMD_MIRROR 		= XRANDR + PRIM_AUTO + SECO_AUTO + ' --same-as #PRIMARY',
+	  CMD_EXTEND_LEFT 	= XRANDR + PRIM_AUTO + SECO_AUTO + ' --left-of #PRIMARY',
+	  CMD_EXTEND_RIGHT  = XRANDR + PRIM_AUTO + SECO_AUTO + ' --right-of #PRIMARY',
+	  CMD_EXTEND_TOP 	= XRANDR + PRIM_AUTO + SECO_AUTO + ' --top-of #PRIMARY',
+	  CMD_EXTEND_BOTTOM = XRANDR + PRIM_AUTO + SECO_AUTO + ' --bottom-of #PRIMARY';
 
 const EXP_EDP  = "eDP",
 	  EXP_VIRT = "VIRTUAL",
 	  EXP_DISC = "disconnected",
+	  EXP_PRIM = "primary",
 	  EXP_MIRROR = "+0+0";
 
 /*
-  TODO: Add MODES Classes
   TODO: Add change between extended modes;
   TODO: Add comments.
 */
+const Mode = new Lang.Class({
+	Name: 'Mode',
+    _init: function(index, name, cmd, iconName) 
+    {
+    	this._index		 = index;
+    	this._name 		 = name;
+    	this._cmd 		 = cmd;
+    	this._icon 		 = iconName;
+    },
+    _getIndex: function()
+    {
+    	return this._index;
+    },
+    _getName: function()
+    {
+    	return this._name;
+    },
+    _getIcon: function()
+    {
+    	return this._icon;
+    },
+    _activate: function(primary, secondary)
+    {
+    	return this._cmd.replace(/\#PRIMARY/g, primary._getName())
+						.replace(/\#SECONDARY/g, secondary._getName());
+    }
+});
+
 const Display = new Lang.Class({
 	Name: 'Display',
     _init: function(name, resolution, connected, marked_primary) 
@@ -61,10 +90,28 @@ const DisplayHandler = new Lang.Class({
     _init: function() 
     {
     	this._is_desktop = true;
+    	this._modes = [];
+    	this._provModes();
+    },
+    _provModes: function()
+    {
+ 		this.MODE_PRIMARY 	= new Mode(0,_("Primary only"),CMD_PRIMARY,"video-display-symbolic");
+	  	this.MODE_MIRROR 	= new Mode(1,_("Mirrored"),CMD_MIRROR,"video-display-symbolic");
+	  	this.MODE_EXTEND 	= new Mode(2,_("Extended"),CMD_EXTEND_LEFT,"video-display-symbolic");
+	  	this.MODE_SECONDARY = new Mode(3,_("Secondary only"),CMD_SECONDARY,"video-display-symbolic");
+
+    	this._modes.push(this.MODE_PRIMARY);
+    	this._modes.push(this.MODE_MIRROR);
+    	this._modes.push(this.MODE_EXTEND);
+    	this._modes.push(this.MODE_SECONDARY);
+    },
+    _getModes: function()
+    {
+    	return this._modes;
     },
 	_setMode: function( mode ) 
 	{
-		if(mode != null && mode != this._getMode() 
+		if(mode != null && mode !== this._getMode() 
 			&& this._displaySetMode(mode))
 			this._mode = mode;
 	},
@@ -76,19 +123,7 @@ const DisplayHandler = new Lang.Class({
 	},
 	_getIndex: function() 
 	{
-		let index = 0;
-
-		switch( this._getMode() )
-		{
-			case MODE_MIRROR:
-				index = 1; break;
-			case MODE_EXTEND:
-				index = 2; break;
-			case MODE_SECONDARY:
-				index = 3; break;
-		}
-
-		return index;
+		return this._getMode()._getIndex();
 	},
 	_displayGetMode: function() 
 	{
@@ -101,18 +136,18 @@ const DisplayHandler = new Lang.Class({
 
 		if ( this._secondary == null || 
 				!this._secondary._getResolution() )
-			mode = MODE_PRIMARY;
+			mode = this.MODE_PRIMARY;
 		else
 		{
 			if ( ! this._primary._getResolution() )
-				mode = MODE_SECONDARY;
+				mode = this.MODE_SECONDARY;
 			else
 			{
 				if ( this._primary._getResolution().indexOf(EXP_MIRROR) > -1 && 
 					 this._secondary._getResolution().indexOf(EXP_MIRROR) > -1 )
-					mode = MODE_MIRROR;
+					mode = this.MODE_MIRROR;
 				else
-					mode = MODE_EXTEND;
+					mode = this.MODE_EXTEND;
 			}
 		}
 
@@ -120,25 +155,8 @@ const DisplayHandler = new Lang.Class({
 	},
 	_displaySetMode: function(mode)
 	{
-		let cmd,
-			result;
-
-		switch(mode) 
-		{
-			case MODE_PRIMARY:
-				cmd = CMD_PRIMARY; break;
-			case MODE_MIRROR:
-				cmd = CMD_MIRROR; break;
-			case MODE_EXTEND:
-				cmd = CMD_EXTEND_LEFT; break;
-			case MODE_SECONDARY:
-				cmd = CMD_SECONDARY; break;
-		}
-
-		cmd = cmd.replace(/\#PRIMARY/g, this._primary._getName())
-				 .replace(/\#SECONDARY/g, this._secondary._getName());
-
-		result = Utils._run(cmd);
+		let cmd 	= mode._activate(this._primary, this._secondary);
+		let result 	= Utils._run(cmd);
 		
 		return result.success;
 	},
@@ -155,13 +173,13 @@ const DisplayHandler = new Lang.Class({
 			{
 				let ival = lines[i].split(" ");
 
-				name 			= ival[0];
-				connected 		= ival[1];
-				marked_primary  = ival[2].indexOf("primary") > -1 ? true : false;
-				resolution 		= ival[2].indexOf("(") > -1 ? 
-							 		null : ival[2].indexOf("primary") > -1 ? 
-							 		(ival[3].indexOf("(") > -1 ? null : ival[3]) : ival[2];
-				
+				let name 			= ival[0],
+					connected 		= ival[1],
+					marked_primary  = ival[2].indexOf(EXP_PRIM) > -1 ? true : false,
+					resolution 		= ival[2].indexOf("(") > -1 ? 
+								 		null : ival[2].indexOf(EXP_PRIM) > -1 ? 
+								 		(ival[3].indexOf("(") > -1 ? null : ival[3]) : ival[2];
+					
 				displays.push(new Display(name, resolution, connected, marked_primary));
 			}
 		}
@@ -198,8 +216,6 @@ const DisplayHandler = new Lang.Class({
 			}
 		}
 		else 
-		{
 			throw new Error("Sorry, for some reason we could not execute the following command: " + CMD_GET_CURRENT);
-		}
 	}
 });

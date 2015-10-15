@@ -7,8 +7,9 @@ const St       = imports.gi.St,
       Gettext  = imports.gettext,
       Mainloop = imports.mainloop,
       ExtensionUtils = imports.misc.extensionUtils,
-      Local          = ExtensionUtils.getCurrentExtension();
-      
+      Local          = ExtensionUtils.getCurrentExtension(),
+      XRANDR_PATH    = "which xrandr";
+
 let   _theme = imports.gi.Gtk.IconTheme.get_default();
 
 /**
@@ -62,6 +63,28 @@ function _run( command )
 }
 
 /**
+ * _initTheme:
+ *
+ * Initialize extensionsdir/icons to default theme from gnome,
+ * this lets us load the custom SVG files for popup modes.
+ */
+function _initTheme() 
+{
+    _theme.append_search_path(Local.path + '/icons');
+}
+
+/**
+ * _getXRandr:
+ *
+ * Returns the actually localtion of the xrandr command, normally should 
+ * be in /usr/bin/xrandr, we verify just for the case it doesnt.
+ */
+function _getXRandr()
+{
+  return this._run(XRANDR_PATH).callback;
+}
+
+/**
  * _initTranslations:
  * @domain: (optional): the gettext domain to use
  *
@@ -81,17 +104,6 @@ function _initTranslations(domain)
         Gettext.bindtextdomain(domain, localeDir.get_path());
     else
         Gettext.bindtextdomain(domain, Config.LOCALEDIR);
-}
-
-/**
- * _initTheme:
- *
- * Initialize extensionsdir/icons to default theme from gnome,
- * this lets us load the custom SVG files for popup modes.
- */
-function _initTheme() 
-{
-    _theme.append_search_path(Local.path + '/icons');
 }
 
 /**

@@ -1,0 +1,30 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: display-switcher\n"
+"POT-Creation-Date: 2015-10-14 23:24-0300\n"
+"PO-Revision-Date: 2015-10-14 23:25-0300\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.5\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Last-Translator: \n"
+"Language: pt_BR\n"
+
+#: displayHandler.js:94
+msgid "Primary only"
+msgstr "Primário somente"
+
+#: displayHandler.js:95
+msgid "Mirrored"
+msgstr "Espelhado"
+
+#: displayHandler.js:96
+msgid "Extended"
+msgstr "Extendido"
+
+#: displayHandler.js:97
+msgid "Secondary only"
+msgstr "Secundário somente"

@@ -3,6 +3,6 @@
 	"description": "Manage display settings using xRandr", 
 	"shell-version": ["3.14","3.16","3.18"], 
 	"uuid": "lucas.diedrich+video-switcher@gmail.com",
-	"gettext-domain": "displayswitcher",
+	"gettext-domain": "gnome-shell-extension-video-switcher",
 	"version": "0.3"
 }

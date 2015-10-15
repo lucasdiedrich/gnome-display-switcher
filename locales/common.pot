@@ -1,0 +1,30 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: display-switcher\n"
+"POT-Creation-Date: 2015-10-14 22:27-0300\n"
+"PO-Revision-Date: 2015-10-14 23:17-0300\n"
+"Last-Translator: Lucas Guilherme Diedrich\n"
+"Language-Team: \n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.5\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: displayHandler.js:94
+msgid "Primary only"
+msgstr ""
+
+#: displayHandler.js:95
+msgid "Mirrored"
+msgstr ""
+
+#: displayHandler.js:96
+msgid "Extended"
+msgstr ""
+
+#: displayHandler.js:97
+msgid "Secondary only"
+msgstr ""
