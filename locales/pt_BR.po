@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: display-switcher\n"
 "POT-Creation-Date: 2015-10-14 23:24-0300\n"
-"PO-Revision-Date: 2015-10-14 23:25-0300\n"
+"PO-Revision-Date: 2015-10-15 14:33-0300\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -13,18 +13,26 @@ msgstr ""
 "Last-Translator: \n"
 "Language: pt_BR\n"
 
-#: displayHandler.js:94
+#: ../lucas.diedrich+video-switcher@gmail.com/displayHandler.js:98
 msgid "Primary only"
 msgstr "Primário somente"
 
-#: displayHandler.js:95
+#: ../lucas.diedrich+video-switcher@gmail.com/displayHandler.js:99
 msgid "Mirrored"
 msgstr "Espelhado"
 
-#: displayHandler.js:96
+#: ../lucas.diedrich+video-switcher@gmail.com/displayHandler.js:100
 msgid "Extended"
 msgstr "Extendido"
 
-#: displayHandler.js:97
+#: ../lucas.diedrich+video-switcher@gmail.com/displayHandler.js:101
 msgid "Secondary only"
 msgstr "Secundário somente"
+
+#: ../lucas.diedrich+video-switcher@gmail.com/displayHandler.js:133
+msgid "Sorry, we could not discover the primary display monitor"
+msgstr "Desculpe, não foi possível identificar o display primário."
+
+#: ../lucas.diedrich+video-switcher@gmail.com/displayHandler.js:217
+msgid "Sorry, for some reason we could not execute the following command: "
+msgstr "Desculpe, por alguma razão não conseguimos executar este comando: "

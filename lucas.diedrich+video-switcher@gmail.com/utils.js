@@ -1,39 +1,14 @@
 
-const St       = imports.gi.St,
-      Gio      = imports.gi.Gio,
-      Main     = imports.ui.main,
+const Gio      = imports.gi.Gio,
       GLib     = imports.gi.GLib,
       Config   = imports.misc.config,
       Gettext  = imports.gettext,
-      Mainloop = imports.mainloop,
       ExtensionUtils = imports.misc.extensionUtils,
-      Local          = ExtensionUtils.getCurrentExtension(),
-      XRANDR_PATH    = "which xrandr";
+      Local          = ExtensionUtils.getCurrentExtension();
+
+const XRANDR_PATH    = "which xrandr";
 
 let   _theme = imports.gi.Gtk.IconTheme.get_default();
-
-/**
- * _showMessage:
- * @text: (obrigatory): the text to show on popup
- *
- * Show an message in a popup on primary display during 1000 miliseconds.
- * Probably will be removed as soon as possible.
- */
-function _showMessage(_text) {
- 
-    let text = _text + "";
-    let label = new St.Label({ style_class: 'message-label', text: text });
-    let monitor = Main.layoutManager.primaryMonitor;
-
-    global.stage.add_actor(label);
-    
-    label.set_position(Math.floor (monitor.width / 2 - label.width / 2), 
-                        Math.floor(monitor.height / 2 - label.height / 2));
-    
-    Mainloop.timeout_add(1000, function () { 
-      label.destroy(); 
-    });
-}
 
 /**
  * _run:
@@ -44,7 +19,7 @@ function _showMessage(_text) {
  * Return: Result.{success  - True or False, if the command runned succefully or not. 
  *                 callback - The return of the executed command}
  */
-function _run( command ) 
+function _run( command )
 {
     let result;
 
@@ -68,7 +43,7 @@ function _run( command )
  * Initialize extensionsdir/icons to default theme from gnome,
  * this lets us load the custom SVG files for popup modes.
  */
-function _initTheme() 
+function _initTheme()
 {
     _theme.append_search_path(Local.path + '/icons');
 }
@@ -91,7 +66,7 @@ function _getXRandr()
  * Initialize Gettext to load translations from extensionsdir/locale.
  * If @domain is not provided, it will be taken from metadata['gettext-domain']
  */
-function _initTranslations(domain) 
+function _initTranslations(domain)
 {
     domain = domain || Local.metadata['gettext-domain'];
 
@@ -115,7 +90,7 @@ function _initTranslations(domain)
  * metadata['settings-schema'].
  *
  */
-function _getSettings(schema) 
+function _getSettings(schema)
 {
     schema = schema || Local.metadata['settings-schema']
 

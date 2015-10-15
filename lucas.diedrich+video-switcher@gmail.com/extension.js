@@ -9,19 +9,18 @@ const Main  = imports.ui.main,
       SUI            = Local.imports.switcherUI, 
       Utils          = Local.imports.utils;
 
-const _shortcut      = "shortcut-switch",
-      _schema_file   = "org.gnome.shell.extensions.video-switcher",
-      _shell_version = Config.PACKAGE_VERSION.split('.')[1],
-      _meta_flags    = Meta.KeyBindingFlags.NONE,
-      _is_wayland    = Meta.is_wayland_compositor(),
-      _binding_mode  = _shell_version <= 14 ? Shell.KeyBindingMode.NORMAL : Shell.ActionMode.NORMAL,
-      _show_running_icon = false;
+const SHOW_ICON      = "show-running-icon",
+      SHORTCUT       = "shortcut-switch",
+      SCHEMA         = "org.gnome.shell.extensions.video-switcher",
+      IS_WAYLAND     = Meta.is_wayland_compositor(),
+      META_FLAGS     = Meta.KeyBindingFlags.NONE,
+      SHELL_VERSION  = Config.PACKAGE_VERSION.split('.')[1],
+      BINDING_FLAGS  = SHELL_VERSION <= 14 ? Shell.KeyBindingMode.NORMAL : Shell.ActionMode.NORMAL;
 
 let _extension;
 
-/*
+/**
   TODO: Add comments.
-  TODO: Add locale support and initial translations.
   journalctl /usr/bin/gnome-session -f -o cat - Just for debugging 
 */
 const DisplayExtension = new Lang.Class({
@@ -29,20 +28,19 @@ const DisplayExtension = new Lang.Class({
 
   _init: function() 
   {
-    Utils._initTranslations();
     Utils._initTheme();
 
-    this._settings = Utils._getSettings(_schema_file);
+    this._settings = Utils._getSettings(SCHEMA);
+    this._show_running_icon = this._settings.get_boolean(SHOW_ICON);
     this._switcherManager = new SUI.SwitcherManager();
     this._bind();
 
-    if ( _show_running_icon ) 
-    {
+    if ( this._show_running_icon ) 
       this._loadIcon();
-    }
+
   },
 
-  _show: function(display, screen, window, binding) 
+  _show: function( display, screen, window, binding ) 
   {
     this._switcherManager.popup( binding.is_reversed(), 
                                  binding.get_name(), 
@@ -50,15 +48,15 @@ const DisplayExtension = new Lang.Class({
   },
   _bind: function() 
   {
-    Main.wm.addKeybinding( _shortcut,
+    Main.wm.addKeybinding( SHORTCUT ,
                             this._settings,
-                            _meta_flags,
-                            _binding_mode,
+                            META_FLAGS ,
+                            BINDING_FLAGS,
                             Lang.bind(this, this._show));
   },
   _unBind: function() 
   {
-    Main.wm.removeKeybinding(_shortcut);
+    Main.wm.removeKeybinding(SHORTCUT );
   },  
   _loadIcon: function() 
   {
@@ -81,17 +79,21 @@ const DisplayExtension = new Lang.Class({
 
 function init() 
 {
+  Utils._initTranslations();
 }
 
 function enable() 
 {
-  if( !_is_wayland ) 
+  if( !IS_WAYLAND ) 
     if( typeof _extension === 'undefined' ) 
       _extension = new DisplayExtension();
 }
 
 function disable() 
 {
-  _extension._destroy();
-  _extension = null;
+  if(_extension)
+  {
+    _extension._destroy();
+    _extension = null;
+  }
 }

@@ -1,10 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <schemalist gettext-domain="gnome-shell-extensions">
-	<schema id="org.gnome.shell.extensions.video-switcher" path="/org/gnome/shell/extensions/video-switcher/">
+	<schema 
+		id="org.gnome.shell.extensions.video-switcher" 
+		path="/org/gnome/shell/extensions/video-switcher/">
+
 		<key name="shortcut-switch" type="as">
-	    <!-- For tests only-->
-	    <default><![CDATA[['<Super>i']]]></default>
-	    <!-- This should be the default shortcut-->
- 	    <!--<default>  <![CDATA[['<Super>p']]]></default>-->
-	  </key>    
+	    	<default><![CDATA[['<Super>i']]]></default>
+ 	    	<!--<default>  <![CDATA[['<Super>p']]]></default>-->
+  		</key>
+
+	  	<key name="show-running-icon" type="b">
+	    	<default>false</default>
+	    </key>
 	</schema>
 </schemalist>

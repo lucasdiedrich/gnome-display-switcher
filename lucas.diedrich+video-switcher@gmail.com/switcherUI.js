@@ -1,23 +1,19 @@
 
-const St    = imports.gi.St,
-      Lang  = imports.lang,
-      Clutter   = imports.gi.Clutter,
-      SwitcherPopup = imports.ui.switcherPopup;
-
-const ExtensionUtils = imports.misc.extensionUtils,
-      Local     = ExtensionUtils.getCurrentExtension(),
-      Display   = Local.imports.displayHandler;
+const St             = imports.gi.St,
+      Lang           = imports.lang,
+      Clutter        = imports.gi.Clutter,
+      SwitcherPopup  = imports.ui.switcherPopup,
+      ExtensionUtils = imports.misc.extensionUtils,
+      Local          = ExtensionUtils.getCurrentExtension(),
+      Display        = Local.imports.displayHandler;
       
-const POPUP_APPICON_SIZE = 96;
+const POPUP_APPICON_SIZE = 116;
 
 let _displayHandler;
 
 /*
     TODO: Add comments.
     TODO: Each kind of mode should have its own ICON
-    TODO: Names of kinds of mode should be in MO file
-    TODO: On 'Extend' hover should show another popup with extend options?
-    TODO: Verify how many displays are disposible, if only one show the current display.
     TODO: When user release the "Super" key, the POPUP should hold opened.
 */
 const SwitcherManager = new Lang.Class({

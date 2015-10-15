@@ -1,12 +1,10 @@
 
-const 	ExtensionUtils  = imports.misc.extensionUtils,
-        Lang  	= imports.lang,
-		Local	= ExtensionUtils.getCurrentExtension(),
-		Utils	= Local.imports.utils;
-
-const Gettext = imports.gettext.domain(Local.metadata['gettext-domain']);
-const _ = Gettext.gettext;
-
+const ExtensionUtils = imports.misc.extensionUtils,
+	  Local		= ExtensionUtils.getCurrentExtension(),
+	  Gettext 	= imports.gettext.domain(Local.metadata['gettext-domain']),
+      Lang 		= imports.lang,
+	  Utils		= Local.imports.utils,
+ 	  _ 		= Gettext.gettext;
 
 const XRANDR 			= Utils._getXRandr(),
 	  PRIM_AUTO			= "	--output #PRIMARY --auto",
@@ -20,14 +18,13 @@ const XRANDR 			= Utils._getXRandr(),
 	  CMD_EXTEND_TOP 	= XRANDR + PRIM_AUTO + SECO_AUTO + ' --top-of #PRIMARY',
 	  CMD_EXTEND_BOTTOM = XRANDR + PRIM_AUTO + SECO_AUTO + ' --bottom-of #PRIMARY';
 
-const EXP_EDP  = "eDP",
-	  EXP_VIRT = "VIRTUAL",
-	  EXP_DISC = "disconnected",
-	  EXP_PRIM = "primary",
+const EXP_EDP  	 = "eDP",
+	  EXP_VIRT 	 = "VIRTUAL",
+	  EXP_DISC 	 = "disconnected",
+	  EXP_PRIM 	 = "primary",
 	  EXP_MIRROR = "+0+0";
 
 /*
-  TODO: Add change between extended modes;
   TODO: Add comments.
 */
 const Mode = new Lang.Class({
@@ -51,10 +48,9 @@ const Mode = new Lang.Class({
     {
     	return this._icon;
     },
-    _activate: function(primary, secondary)
+    _activate: function()
     {
-    	return this._cmd.replace(/\#PRIMARY/g, primary._getName())
-						.replace(/\#SECONDARY/g, secondary._getName());
+    	return this._cmd;
     }
 });
 
@@ -97,12 +93,13 @@ const DisplayHandler = new Lang.Class({
     {
  		this.MODE_PRIMARY 	= new Mode(0,_("Primary only"),CMD_PRIMARY,"video-display-symbolic");
 	  	this.MODE_MIRROR 	= new Mode(1,_("Mirrored"),CMD_MIRROR,"video-display-symbolic");
-	  	this.MODE_EXTEND 	= new Mode(2,_("Extended"),CMD_EXTEND_LEFT,"video-display-symbolic");
+	  	this.MODE_EXTEND_L 	= new Mode(2,_("Extended"),CMD_EXTEND_LEFT,"video-display-symbolic");
+	  	this.MODE_EXTEND_R 	= new Mode(2,_("Extended"),CMD_EXTEND_RIGHT,"video-display-symbolic");	  	
 	  	this.MODE_SECONDARY = new Mode(3,_("Secondary only"),CMD_SECONDARY,"video-display-symbolic");
 
     	this._modes.push(this.MODE_PRIMARY);
     	this._modes.push(this.MODE_MIRROR);
-    	this._modes.push(this.MODE_EXTEND);
+    	this._modes.push(this.MODE_EXTEND_L);
     	this._modes.push(this.MODE_SECONDARY);
     },
     _getModes: function()
@@ -111,9 +108,16 @@ const DisplayHandler = new Lang.Class({
     },
 	_setMode: function( mode ) 
 	{
-		if(mode != null && mode !== this._getMode() 
-			&& this._displaySetMode(mode))
-			this._mode = mode;
+		if( typeof mode !== 'undefined' && mode != null )
+		{
+			if ( mode === this._mode && 
+					mode === this.MODE_EXTEND_L &&
+					this._mode === this.MODE_EXTEND_L )
+				mode = this.MODE_EXTEND_R;
+
+			if (this._displaySetMode(mode))
+				this._mode = mode;
+		}
 	},
 	_getMode: function() 
 	{
@@ -132,7 +136,7 @@ const DisplayHandler = new Lang.Class({
 		this._reload();
 
 		if( this._primary == null)
-			throw new Error("Sorry, we could not discover the primary display monitor.");			
+			throw new Error(_("Sorry, we could not discover the primary display monitor."));
 
 		if ( this._secondary == null || 
 				!this._secondary._getResolution() )
@@ -147,15 +151,21 @@ const DisplayHandler = new Lang.Class({
 					 this._secondary._getResolution().indexOf(EXP_MIRROR) > -1 )
 					mode = this.MODE_MIRROR;
 				else
-					mode = this.MODE_EXTEND;
+				{
+					if ( this._primary._getResolution().indexOf(EXP_MIRROR) < 0 )
+						mode = this.MODE_EXTEND_L;
+					else
+						mode = this.MODE_EXTEND_R;
+				}
 			}
 		}
-
 		return mode;
 	},
 	_displaySetMode: function(mode)
 	{
-		let cmd 	= mode._activate(this._primary, this._secondary);
+		let cmd 	= mode._activate().replace(/\#PRIMARY/g, this._primary._getName())
+									.replace(/\#SECONDARY/g, this._secondary._getName());
+
 		let result 	= Utils._run(cmd);
 		
 		return result.success;
@@ -199,7 +209,7 @@ const DisplayHandler = new Lang.Class({
 			{		
 				if (display._isConnected()) 
 				{
-					//Verify if the name start with eDP, so its na laptop.
+					//Verify if the name start with eDP, so it's a laptop.
 					if (display._getName().indexOf(EXP_EDP) > -1 )
 					{
 						this._primary = display;
@@ -216,6 +226,6 @@ const DisplayHandler = new Lang.Class({
 			}
 		}
 		else 
-			throw new Error("Sorry, for some reason we could not execute the following command: " + CMD_GET_CURRENT);
+			throw new Error(_("Sorry, for some reason we could not execute the following command: ") + CMD_GET_CURRENT);
 	}
 });
