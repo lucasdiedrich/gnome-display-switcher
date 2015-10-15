@@ -1,3 +1,11 @@
+Version 0.4:
+	- Add: Full support for internalization. 
+	- Add: Full support for custom icons.
+	- Add: English and Brazilian Portuguese translations. 
+	- Add: When selecting "Extend" mode twice, it will switch from left to right, right to left.
+	- Fix: Better code organization. 
+	- Fix: Now it makes less calls to shell.
+
 Version 0.3:
  	- Add: Wayland verification.
     - Add: Exceptions Handlers.
