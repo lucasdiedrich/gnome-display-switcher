@@ -5,6 +5,9 @@ Display Switcher is an extension for gnome-shell 3.14+ that provides an easy and
   - Fast way to select display monitors
   - You can choose what you want and not just pressing praying for it.
 
+![alt tag](https://gitlab.com/lucas-diedrich/video-switcher/blob/master/demo.jpg)
+
+
 ### Version 
 
 [0.4 - See changelog](https://gitlab.com/lucas-diedrich/video-switcher/blob/master/CHANGELOG.md)
@@ -46,8 +49,8 @@ This extension couldn't be done without some help of some people and principle t
 And "feborges", "Jasper" from gnome-shell IRC.
 
 
-###License
-###----
+### License
+### ----
 
 [MIT](https://gitlab.com/lucas-diedrich/video-switcher/blob/master/LICENSE)
 
