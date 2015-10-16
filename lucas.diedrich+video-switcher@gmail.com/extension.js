@@ -28,6 +28,7 @@ const DisplayExtension = new Lang.Class({
 
   _init: function() 
   {
+    Utils._initTranslations();
     Utils._initTheme();
 
     this._settings = Utils._getSettings(SCHEMA);
@@ -79,7 +80,6 @@ const DisplayExtension = new Lang.Class({
 
 function init() 
 {
-  Utils._initTranslations();
 }
 
 function enable() 

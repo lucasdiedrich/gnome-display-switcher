@@ -46,10 +46,16 @@ This extension couldn't be done without some help of some people and principle t
 And "feborges", "Jasper" from gnome-shell IRC.
 
 
-License
-----
+###License
+###----
 
 [MIT](https://gitlab.com/lucas-diedrich/video-switcher/blob/master/LICENSE)
+
+#### Icons license
+```
+<div>Icons made by <a href="http://www.flaticon.com/authors/situ-herrera" title="Situ Herrera">Situ Herrera</a>, <a href="http://www.freepik.com" title="Freepik">Freepik</a> from <a href="http://www.flaticon.com" title="Flaticon">www.flaticon.com</a>             is licensed by <a href="http://creativecommons.org/licenses/by/3.0/" title="Creative Commons BY 3.0">CC BY 3.0</a></div>
+```
+
 
 
 
