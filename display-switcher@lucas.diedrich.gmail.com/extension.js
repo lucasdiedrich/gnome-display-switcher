@@ -11,7 +11,6 @@ const Main  = imports.ui.main,
 
 const SHOW_ICON      = "show-running-icon",
       SHORTCUT       = "shortcut-switch",
-      SCHEMA         = "org.gnome.shell.extensions.video-switcher",
       IS_WAYLAND     = Meta.is_wayland_compositor(),
       META_FLAGS     = Meta.KeyBindingFlags.NONE,
       SHELL_VERSION  = Config.PACKAGE_VERSION.split('.')[1],
@@ -19,10 +18,7 @@ const SHOW_ICON      = "show-running-icon",
 
 let _extension;
 
-/**
-  TODO: Add comments.
-  journalctl /usr/bin/gnome-session -f -o cat - Just for debugging 
-*/
+// TODO: BUG: After we suspend the machine, the extension doesnt work back.
 const DisplayExtension = new Lang.Class({
   Name: 'DisplayExtension',
 
@@ -31,7 +27,7 @@ const DisplayExtension = new Lang.Class({
     Utils._initTranslations();
     Utils._initTheme();
 
-    this._settings = Utils._getSettings(SCHEMA);
+    this._settings = Utils._getSettings();
     this._show_running_icon = this._settings.get_boolean(SHOW_ICON);
     this._switcherManager = new SUI.SwitcherManager();
     this._bind();
@@ -40,14 +36,13 @@ const DisplayExtension = new Lang.Class({
       this._loadIcon();
 
   },
-
   _show: function( display, screen, window, binding ) 
   {
-    this._switcherManager.popup( binding.is_reversed(), 
-                                 binding.get_name(), 
-                                 binding.get_mask()); 
+    this._switcherManager._show( binding.is_reversed(), 
+                                  binding.get_name(), 
+                                  binding.get_mask()); 
   },
-  _bind: function() 
+  _bind: function()
   {
     Main.wm.addKeybinding( SHORTCUT ,
                             this._settings,
@@ -55,19 +50,19 @@ const DisplayExtension = new Lang.Class({
                             BINDING_FLAGS,
                             Lang.bind(this, this._show));
   },
-  _unBind: function() 
+  _unBind: function()
   {
-    Main.wm.removeKeybinding(SHORTCUT );
+    Main.wm.removeKeybinding(SHORTCUT);
   },  
-  _loadIcon: function() 
+  _loadIcon: function()
   {
-    this._topIcon = this._switcherManager.getIcon();
+    this._topIcon = this._switcherManager._getIcon();
     Main.panel._rightBox.insert_child_at_index(this._topIcon, 0);    
   },
   _unLoadIcon: function()
   {
-    if (this._topIcon != null && 
-      typeof this._topIcon === 'undefined' )
+    if ( typeof this._topIcon === 'undefined' && 
+          this._topIcon != null )
       this._topIcon = null;
   },
   _destroy: function()
@@ -78,20 +73,21 @@ const DisplayExtension = new Lang.Class({
   }
 });
 
-function init() 
-{
-}
+/**
+  Required methods for a gnome-shell extension.
+*/
+function init() {}
 
-function enable() 
+function enable()
 {
-  if( !IS_WAYLAND ) 
-    if( typeof _extension === 'undefined' ) 
+  if( !IS_WAYLAND )
+    if( typeof _extension === 'undefined' )
       _extension = new DisplayExtension();
 }
 
-function disable() 
+function disable()
 {
-  if(_extension)
+  if( _extension )
   {
     _extension._destroy();
     _extension = null;

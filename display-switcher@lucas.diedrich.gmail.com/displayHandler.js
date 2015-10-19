@@ -24,9 +24,7 @@ const EXP_EDP  	 = "eDP",
 	  EXP_PRIM 	 = "primary",
 	  EXP_MIRROR = "+0+0";
 
-/*
-  TODO: Add comments.
-*/
+
 const Mode = new Lang.Class({
 	Name: 'Mode',
     _init: function(index, name, cmd, iconName) 
@@ -35,22 +33,6 @@ const Mode = new Lang.Class({
     	this._name 		 = name;
     	this._cmd 		 = cmd;
     	this._icon 		 = iconName;
-    },
-    _getIndex: function()
-    {
-    	return this._index;
-    },
-    _getName: function()
-    {
-    	return this._name;
-    },
-    _getIcon: function()
-    {
-    	return this._icon;
-    },
-    _activate: function()
-    {
-    	return this._cmd;
     }
 });
 
@@ -63,21 +45,9 @@ const Display = new Lang.Class({
     	this._connected  = connected;
     	this._marked 	 = marked_primary;
     },
-    _getName: function()
-    {
-    	return this._name;
-    },
-    _getResolution: function()
-    {
-    	return this._resolution;
-    },
     _isConnected: function()
     {
     	return (this._connected.indexOf(EXP_DISC) < 0);
-    },
-    _isMarked: function()
-    {
-    	return this._marked;
     }
 });	
 
@@ -85,8 +55,8 @@ const DisplayHandler = new Lang.Class({
 	Name: 'DisplayHandler',
     _init: function() 
     {
+    	this._modes 	 = [];
     	this._is_desktop = true;
-    	this._modes = [];
     	this._provModes();
     },
     _provModes: function()
@@ -102,80 +72,67 @@ const DisplayHandler = new Lang.Class({
     	this._modes.push(this.MODE_EXTEND_L);
     	this._modes.push(this.MODE_SECONDARY);
     },
-    _getModes: function()
-    {
-    	return this._modes;
-    },
-	_setMode: function( mode ) 
-	{
-		if( typeof mode !== 'undefined' && mode != null )
-		{
-			if ( mode === this._mode && 
-					mode === this.MODE_EXTEND_L &&
-					this._mode === this.MODE_EXTEND_L )
-				mode = this.MODE_EXTEND_R;
-
-			if (this._displaySetMode(mode))
-				this._mode = mode;
-		}
-	},
 	_getMode: function() 
 	{
-		this._mode = this._displayGetMode();
+		this._reload();
+
+		if ( this._primary == null ||
+				!this._primary._resolution )
+			this._mode = this.MODE_SECONDARY;
+		else
+		{
+			if ( this._secondary == null || 
+					!this._secondary._resolution )
+				this._mode = this.MODE_PRIMARY;
+			else
+			{
+				if ( this._primary._resolution.indexOf(EXP_MIRROR) > -1 && 
+						this._secondary._resolution.indexOf(EXP_MIRROR) > -1 )
+					this._mode = this.MODE_MIRROR;
+				else
+				{
+					if ( this._primary._resolution.indexOf(EXP_MIRROR) < 0 )
+						this._mode = this.MODE_EXTEND_L;
+					else
+						this._mode = this.MODE_EXTEND_R;
+				}
+			}
+		}
 
 		return this._mode;
 	},
 	_getIndex: function() 
 	{
-		return this._getMode()._getIndex();
-	},
-	_displayGetMode: function() 
+		return this._getMode()._index;
+	},	
+	_setMode: function(mode)
 	{
-		let mode;
-
-		this._reload();
-
-		if( this._primary == null)
-			throw new Error(_("Sorry, we could not discover the primary display monitor."));
-
-		if ( this._secondary == null || 
-				!this._secondary._getResolution() )
-			mode = this.MODE_PRIMARY;
-		else
+		if( typeof mode !== 'undefined' && mode != null )
 		{
-			if ( ! this._primary._getResolution() )
-				mode = this.MODE_SECONDARY;
-			else
-			{
-				if ( this._primary._getResolution().indexOf(EXP_MIRROR) > -1 && 
-					 this._secondary._getResolution().indexOf(EXP_MIRROR) > -1 )
-					mode = this.MODE_MIRROR;
-				else
-				{
-					if ( this._primary._getResolution().indexOf(EXP_MIRROR) < 0 )
-						mode = this.MODE_EXTEND_L;
-					else
-						mode = this.MODE_EXTEND_R;
-				}
-			}
-		}
-		return mode;
-	},
-	_displaySetMode: function(mode)
-	{
-		let cmd 	= mode._activate().replace(/\#PRIMARY/g, this._primary._getName())
-									.replace(/\#SECONDARY/g, this._secondary._getName());
+			if ( mode === this._mode && 
+					mode === this.MODE_EXTEND_L )
+				mode = this.MODE_EXTEND_R;
 
-		let result 	= Utils._run(cmd);
+			let cmd = mode._cmd;
+			
+			if ( this._primary != null)
+				cmd = cmd.replace(/\#PRIMARY/g, this._primary._name);
+			if ( this._secondary != null ) 
+				cmd = cmd.replace(/\#SECONDARY/g, this._secondary._name);
+
+			let result 	= Utils._run(cmd);
 		
-		return result.success;
+			if ( result.success )
+				this._mode = mode;
+		} else
+			log("Invalid type of mode");
 	},
-
 	_parse: function(callback)
 	{
 		let lines 	 = callback.split("\n"),
 			displays = [];
 		
+		//Skip first line, we dont want to see the Screen line.
 		for (let i = 1; i < lines.length -1; i++)
 		{
 			//Ignore display resolution lines
@@ -205,23 +162,18 @@ const DisplayHandler = new Lang.Class({
 		{
 			let displays = this._parse(result.callback);
 
-			for each (let display in displays)
+			for each ( let display in displays )
 			{		
-				if (display._isConnected()) 
+				if ( display._isConnected() ) 
 				{
 					//Verify if the name start with eDP, so it's a laptop.
-					if (display._getName().indexOf(EXP_EDP) > -1 )
+					if ( display._name.indexOf(EXP_EDP) > -1 )
 					{
 						this._primary = display;
 						this._is_desktop = false;
 			 		} 
 			 		else
-			 		{
-						if(this._is_desktop && display._isMarked()) 
-				  			this._primary = display;
-					  	else
-				 			this._secondary = display;
-			 		}
+						display._marked && this._is_desktop ? this._primary = display : this._secondary = display;
 				}
 			}
 		}

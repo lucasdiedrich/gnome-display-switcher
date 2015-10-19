@@ -1,8 +1,0 @@
-{
-	"name": "Display Switcher",
-	"description": "Switch between display modes using the powerfull xRandr", 
-	"shell-version": ["3.14","3.16","3.18"], 
-	"uuid": "lucas.diedrich+video-switcher@gmail.com",
-	"gettext-domain": "gnome-shell-extension-video-switcher",
-	"version": "0.4"
-}

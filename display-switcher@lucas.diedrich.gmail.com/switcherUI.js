@@ -7,28 +7,24 @@ const St             = imports.gi.St,
       Local          = ExtensionUtils.getCurrentExtension(),
       Display        = Local.imports.displayHandler;
       
-const POPUP_APPICON_SIZE = 116;
+const POPUP_ICON_SIZE = 116;
 
 let _displayHandler;
 
-/*
-    TODO: Add comments.
-    TODO: Each kind of mode should have its own ICON
-    TODO: When user release the "Super" key, the POPUP should hold opened.
-*/
 const SwitcherManager = new Lang.Class({
     Name: 'SwitcherManager',
 
     _init: function() 
     {
-      if( _displayHandler == null || 
-          typeof _displayHandler === 'undefined' )
+      if( typeof _displayHandler === 'undefined' ||  
+           _displayHandler == null )
         _displayHandler = new Display.DisplayHandler();
     },
-    popup: function(backward, binding, mask) 
+    _show: function(backward, binding, mask) 
     {
-        if (!this._popup) {
-            this._popup = new ModesPopup(_displayHandler._getModes());
+        if (!this._popup) 
+        {
+            this._popup = new ModesPopup(_displayHandler._modes);
 
             this._popup.show(backward, binding, mask);
             this._popup._select(_displayHandler._getIndex());
@@ -39,7 +35,7 @@ const SwitcherManager = new Lang.Class({
                                       }));
         }
     },
-    getIcon: function()
+    _getIcon: function()
     {
         let icon = new St.Bin({ style_class: 'panel-button',
                                       reactive: true,
@@ -74,6 +70,16 @@ const ModesPopup = new Lang.Class({
 
         return Clutter.EVENT_STOP;
     },
+    //TODO: FIX THIS BUT IS WORKING
+    _keyReleaseEvent: function(actor, event) {
+        let [x, y, mods] = global.get_pointer();
+        let state = mods & this._modifierMask;
+
+        if (event.get_key_code() == 36 && state == 0 )
+            this._finish(event.get_time());
+
+        return Clutter.EVENT_STOP;
+    },    
     _finish : function(time) 
     {
         this.parent(time);
@@ -90,21 +96,15 @@ const ModesList = new Lang.Class({
         this.parent(true);
         for each (let mode in modes)
             this._addIcon(mode);
-
     },
     _addIcon : function(mode) 
     {
-        let box = new St.BoxLayout({ style_class: 'display-switcher-app', vertical: true });
+        let box   = new St.BoxLayout({ style_class: 'display-switcher-app', vertical: true }),
+            icon  = new St.Icon({ icon_name: mode._icon, icon_size: POPUP_ICON_SIZE }),
+            text  = new St.Label({ text: mode._name });
 
-        let icon = mode.iconActor;
-        if (!icon)
-            icon = new St.Icon({ icon_name: mode._getIcon(),
-                                 icon_size: POPUP_APPICON_SIZE });
-
-        box.add(icon, { x_fill: false, y_fill: false } );
-
-        let text = new St.Label({ text: mode._getName() });
-        box.add(text, { x_fill: false });
+        box.add(icon);
+        box.add(text);
 
         this.addItem(box, text);
     }
