@@ -4,11 +4,10 @@ const Gio      = imports.gi.Gio,
       Config   = imports.misc.config,
       Gettext  = imports.gettext,
       ExtensionUtils = imports.misc.extensionUtils,
-      Local          = ExtensionUtils.getCurrentExtension();
+      Local          = ExtensionUtils.getCurrentExtension(),
+      Theme          = imports.gi.Gtk.IconTheme.get_default();
 
 const XRANDR_PATH    = "which xrandr";
-
-let   _theme = imports.gi.Gtk.IconTheme.get_default();
 
 /**
  * _run:
@@ -42,10 +41,11 @@ function _run( command )
  *
  * Initialize extensionsdir/icons to default theme from gnome,
  * this lets us load the custom SVG files for popup modes.
+ *
  */
 function _initTheme()
 {
-    _theme.append_search_path(Local.path + '/icons');
+    Theme.append_search_path(Local.path + '/icons');
 }
 
 /**

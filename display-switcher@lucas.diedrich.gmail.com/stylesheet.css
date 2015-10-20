@@ -1,20 +1,15 @@
-
-/*Used for message*/
-.message-label {
-    font-size: 36px;
-    font-weight: bold;
-    color: #ffffff;
-    background-color: rgba(10,10,10,0.7);
-    border-radius: 5px;
-    padding: .5em;
-}
-
-/*Used for top icon*/
-.panel-button {
+/** 
+	Top panel for icon
+*/
+.display-panel-icon {
 
 }
 
-/*Used for modes popup*/
-.display-switcher-app {
-
+/**
+	Modes popup 
+*/
+.display-switcher-mode {
+	text-align: center;
+	color: #ffffff;
+	font-size: 15px;
 }

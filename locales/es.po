@@ -1,25 +1,25 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: display-switcher\n"
-"POT-Creation-Date: 2015-10-14 23:24-0300\n"
-"PO-Revision-Date: 2015-10-19 23:18-0200\n"
+"POT-Creation-Date: 2015-10-19 23:11-0200\n"
+"PO-Revision-Date: 2015-10-19 23:17-0200\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.8.5\n"
 "X-Poedit-Basepath: .\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Last-Translator: \n"
-"Language: pt_BR\n"
+"Language: es\n"
 
 #: ../lucas.diedrich+video-switcher@gmail.com/displayHandler.js:98
 msgid "Primary only"
-msgstr "Somente primário"
+msgstr "Sólo principal"
 
 #: ../lucas.diedrich+video-switcher@gmail.com/displayHandler.js:99
 msgid "Mirrored"
-msgstr "Espelhar"
+msgstr "Espejear"
 
 #: ../lucas.diedrich+video-switcher@gmail.com/displayHandler.js:100
 msgid "Extended"
@@ -27,8 +27,8 @@ msgstr "Extender"
 
 #: ../lucas.diedrich+video-switcher@gmail.com/displayHandler.js:101
 msgid "Secondary only"
-msgstr "Somente secundário"
+msgstr "Sólo secundaria"
 
 #: ../lucas.diedrich+video-switcher@gmail.com/displayHandler.js:217
 msgid "Sorry, for some reason we could not execute the following command: "
-msgstr "Desculpe, por alguma razão não conseguimos executar este comando: "
+msgstr "Lo sentimos, pero por alguna razón no pudimos ejecutar el siguiente comando:"

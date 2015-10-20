@@ -57,6 +57,8 @@ const DisplayHandler = new Lang.Class({
     {
     	this._modes 	 = [];
     	this._is_desktop = true;
+    	this._primary 	 = null;
+    	this._secondary  = null;
     	this._provModes();
     },
     _provModes: function()
@@ -173,7 +175,9 @@ const DisplayHandler = new Lang.Class({
 						this._is_desktop = false;
 			 		} 
 			 		else
-						display._marked && this._is_desktop ? this._primary = display : this._secondary = display;
+						display._marked && this._is_desktop ? 
+							this._primary = display : 
+								this._secondary = display;
 				}
 			}
 		}
