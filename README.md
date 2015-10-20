@@ -5,29 +5,29 @@ Display Switcher is an extension for gnome-shell 3.14+ that provides an easy and
   - Fast way to select display monitors
   - You can choose what you want and not just pressing praying for it.
 
-![alt tag](https://gitlab.com/lucas-diedrich/video-switcher/raw/master/demo.jpg)
+![alt tag](https://gitlab.com/lucas-diedrich/display-switcher/raw/master/demo.jpg)
 
 
 ### Version 
 
-[0.4 - See changelog](https://gitlab.com/lucas-diedrich/video-switcher/blob/master/CHANGELOG.md)
+[0.4 - See changelog](https://gitlab.com/lucas-diedrich/display-switcher/blob/master/CHANGELOG.md)
 
 ### Installation
 
 Here goes the process for installation, can be an shell script, trough git, ou zip file. I want to enable this plugin for installation from Gnome-shell Plugins Websites :
 
 ```sh
-$ wget -O install-gs-video-switcher.sh https://gitlab.com/lucas-diedrich/video-switcher/blob/master/install-gs-video-switcher.sh 
-$ chmod + x install-gs-video-switcher.sh 
-$ ./install-gs-video-switcher.sh
-$ rm -f install-gs-video-switcher.sh
+$ wget -O install-gs-display-switcher.sh https://gitlab.com/lucas-diedrich/display-switcher/blob/master/install-gs-display-switcher.sh 
+$ chmod + x install-gs-display-switcher.sh 
+$ ./install-gs-display-switcher.sh
+$ rm -f install-gs-display-switcher.sh
 ```
 
 ### Development
 
 Want to contribute? Great! Any kind of contribution is valid. See the Contribution Guide for details.
 
-[Contribution Guide](https://gitlab.com/lucas-diedrich/video-switcher/blob/master/CONTRIBUTING.md)
+[Contribution Guide](https://gitlab.com/lucas-diedrich/display-switcher/blob/master/CONTRIBUTING.md)
 
 ### Todos
 
@@ -52,7 +52,7 @@ And "feborges", "Jasper" from gnome-shell IRC.
 ### License
  ----
 
-[MIT](https://gitlab.com/lucas-diedrich/video-switcher/blob/master/LICENSE)
+[MIT](https://gitlab.com/lucas-diedrich/display-switcher/blob/master/LICENSE)
 
 #### Icons license
 ```

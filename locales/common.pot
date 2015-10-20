@@ -13,22 +13,22 @@ msgstr ""
 "X-Poedit-Basepath: .\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: ../lucas.diedrich+video-switcher@gmail.com/displayHandler.js:98
+#: ../display-switcher@lucas.diedrich.gmail.com/displayHandler.js:98
 msgid "Primary only"
 msgstr ""
 
-#: ../lucas.diedrich+video-switcher@gmail.com/displayHandler.js:99
+#: ../display-switcher@lucas.diedrich.gmail.com/displayHandler.js:99
 msgid "Mirrored"
 msgstr ""
 
-#: ../lucas.diedrich+video-switcher@gmail.com/displayHandler.js:100
+#: ../display-switcher@lucas.diedrich.gmail.com/displayHandler.js:100
 msgid "Extended"
 msgstr ""
 
-#: ../lucas.diedrich+video-switcher@gmail.com/displayHandler.js:101
+#: ../display-switcher@lucas.diedrich.gmail.com/displayHandler.js:101
 msgid "Secondary only"
 msgstr ""
 
-#: ../lucas.diedrich+video-switcher@gmail.com/displayHandler.js:217
+#: ../display-switcher@lucas.diedrich.gmail.com/displayHandler.js:217
 msgid "Sorry, for some reason we could not execute the following command: "
 msgstr ""
