@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schemalist gettext-domain="gnome-shell-extensions">
+	<schema 
+		id="org.gnome.shell.extensions.display-switcher" 
+		path="/org/gnome/shell/extensions/display-switcher/">
+
+		<key name="shortcut-switch" type="as">
+	    	<default><![CDATA[['<Super>i']]]></default>
+ 	    	<!--<default>  <![CDATA[['<Super>p']]]></default>-->
+  		</key>
+
+	    <key name="mode-icon-size" type="as">
+	    	<default>116</default>
+	    </key>
+
+	  	<key name="show-running-icon" type="b">
+	    	<default>false</default>
+	    </key>
+
+	</schema>
+</schemalist>
