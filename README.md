@@ -5,19 +5,19 @@ Display Switcher is an extension for gnome-shell 3.14+ that provides an easy and
   - Fast way to select display monitors
   - You can choose what you want and not just pressing praying for it.
 
-![alt tag](https://github.com/lucas-diedrich/gnome-display-switcher/raw/master/demo.jpg)
+![alt tag](https://github.com/lucasdiedrich/gnome-display-switcher/raw/master/demo.jpg)
 
 
 ### Version 
 
-[0.4 - See changelog](https://github.com/lucas-diedrich/gnome-display-switcher/blob/master/CHANGELOG.md)
+[0.4 - See changelog](https://github.com/lucasdiedrich/gnome-display-switcher/blob/master/CHANGELOG.md)
 
 ### Installation
 
 Here goes the process for installation, can be an shell script, trough git, ou zip file. I want to enable this plugin for installation from Gnome-shell Plugins Websites :
 
 ```sh
-$ wget -O install-gs-display-switcher.sh https://github.com/lucas-diedrich/gnome-display-switcher/blob/master/install-gs-display-switcher.sh 
+$ wget -O install-gs-display-switcher.sh https://github.com/lucasdiedrich/gnome-display-switcher/blob/master/install-gs-display-switcher.sh 
 $ chmod + x install-gs-display-switcher.sh 
 $ ./install-gs-display-switcher.sh
 $ rm -f install-gs-display-switcher.sh
@@ -27,7 +27,7 @@ $ rm -f install-gs-display-switcher.sh
 
 Want to contribute? Great! Any kind of contribution is valid. See the Contribution Guide for details.
 
-[Contribution Guide](https://github.com/lucas-diedrich/gnome-display-switcher/blob/master/CONTRIBUTING.md)
+[Contribution Guide](https://github.com/lucasdiedrich/gnome-display-switcher/blob/master/CONTRIBUTING.md)
 
 ### Todos
 
@@ -52,7 +52,7 @@ And "feborges", "Jasper" from gnome-shell IRC.
 ### License
  ----
 
-[MIT](https://github.com/lucas-diedrich/gnome-display-switcher/blob/master/LICENSE)
+[MIT](https://github.com/lucasdiedrich/gnome-display-switcher/blob/master/LICENSE)
 
 #### Icons license
 ```
