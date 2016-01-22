@@ -59,6 +59,6 @@ And "feborges", "Jasper" from gnome-shell IRC.
 
 #### Icons license
 
-Icons made by [Situ Herrera](http://www.flaticon.com/authors/situ-herrera), [Freepik](http://www.freepik.com) and [Flaticon](http://www.flaticon.com), is licensed by [CC 3.0](http://creativecommons.org/licenses/by/3.0/). 
+Icons made by [Freepik](http://www.freepik.com) and [Flaticon](http://www.flaticon.com), is licensed by [CC 3.0](http://creativecommons.org/licenses/by/3.0/). 
 
 Edited by lucas.diedrich
