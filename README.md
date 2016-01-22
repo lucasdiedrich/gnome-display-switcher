@@ -15,13 +15,11 @@ Display Switcher is an extension for gnome-shell 3.14+ that provides an easy and
 
 ### Installation
 
-Here goes the process for installation, can be an shell script, trough git, ou zip file. I want to enable this plugin for installation from Gnome-shell Plugins Websites :
+Installation using bash file: 
 
 ```sh
-$ wget -O install-gs-display-switcher.sh https://github.com/lucasdiedrich/gnome-display-switcher/blob/master/install-gs-display-switcher.sh 
-$ chmod + x install-gs-display-switcher.sh 
-$ ./install-gs-display-switcher.sh
-$ rm -f install-gs-display-switcher.sh
+$ bash -c 'su -c "wget -O install-ds.sh https://github.com/lucasdiedrich/gnome-display-switcher/blob/master/install-ds.sh && chmod +x install-ds.sh && ./install-ds.sh"'
+
 ```
 
 ### Development
