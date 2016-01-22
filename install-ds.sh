@@ -7,7 +7,7 @@
 # Created by: Lucas Diedrich
 # Date: 21/01/15
 #
-
+clear
 #
 # Variables
 #
@@ -28,4 +28,5 @@ echo "Extracting extension..."
 tar -zxvf $v_file
 rm -f $v_file
 
+rm -- "$0"
 echo "Done!"

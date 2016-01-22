@@ -15,10 +15,10 @@ Display Switcher is an extension for gnome-shell 3.14+ that provides an easy and
 
 ### Installation
 
-Installation using bash file: 
+Installation using terminal: 
 
 ```sh
-$ bash -c 'wget -O install-ds.sh https://github.com/lucasdiedrich/gnome-display-switcher/raw/master/install-ds.sh && chmod +x install-ds.sh && ./install-ds.sh "0.4"'
+bash -c 'wget -O install-ds.sh https://github.com/lucasdiedrich/gnome-display-switcher/raw/master/install-ds.sh && chmod +x install-ds.sh && ./install-ds.sh "0.4"'
 
 ```
 
