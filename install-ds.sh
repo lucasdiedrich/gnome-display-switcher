@@ -11,7 +11,7 @@
 #
 # Variables
 #
-v_extfolder="~/.local/share/gnome-shell/extensions/"
+v_extfolder=~/.local/share/gnome-shell/extensions/
 v_version="$1"
 v_file="display-switcher-$v_version.tar.gz"
 
