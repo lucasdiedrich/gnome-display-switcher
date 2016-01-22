@@ -55,7 +55,7 @@ And "feborges", "Jasper" from gnome-shell IRC.
 ### License
  ----
 
-[MIT](https://github.com/lucasdiedrich/gnome-display-switcher/blob/master/LICENSE)
+[GPL v2](https://github.com/lucasdiedrich/gnome-display-switcher/blob/master/LICENSE)
 
 #### Icons license
 
