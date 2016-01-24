@@ -1,5 +1,7 @@
 
+
 const ExtensionUtils = imports.misc.extensionUtils,
+	  Main  	= imports.ui.main,
 	  Local		= ExtensionUtils.getCurrentExtension(),
 	  Gettext 	= imports.gettext.domain(Local.metadata['gettext-domain']),
       Lang 		= imports.lang,
@@ -59,6 +61,7 @@ const DisplayHandler = new Lang.Class({
     	this._is_desktop = true;
     	this._primary 	 = null;
     	this._secondary  = null;
+
     	this._provModes();
     },
     _provModes: function()

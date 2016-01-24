@@ -29,7 +29,7 @@ function _run( command )
       
       result = {success: res, callback: out.toString()};
     } 
-    catch (e)
+    catch (e) 
     {
       result = {success: false, callback: "ERROR"};      
     }
