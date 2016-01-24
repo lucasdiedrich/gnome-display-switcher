@@ -2,7 +2,7 @@
 
 #
 # This scripts install an aewsome display switcher for Gnome 
-# shell 3.14+. Read the specs over: 
+# shell 3.12+. Read the specs over: 
 # https://github.com/lucasdiedrich/gnome-display-switcher/
 # Created by: Lucas Diedrich
 # Date: 21/01/15
