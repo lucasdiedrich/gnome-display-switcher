@@ -1,11 +1,12 @@
 
 const Gio      = imports.gi.Gio,
+      Gtk      = imports.gi.Gtk,
       GLib     = imports.gi.GLib,
       Config   = imports.misc.config,
       Gettext  = imports.gettext,
       ExtensionUtils = imports.misc.extensionUtils,
       Local          = ExtensionUtils.getCurrentExtension(),
-      Theme          = imports.gi.Gtk.IconTheme.get_default();
+      Theme          = Gtk.IconTheme.get_default();
 
 const XRANDR_PATH    = "which xrandr";
 
@@ -28,7 +29,7 @@ function _run( command )
       
       result = {success: res, callback: out.toString()};
     } 
-    catch (e) 
+    catch (e)
     {
       result = {success: false, callback: "ERROR"};      
     }
@@ -45,7 +46,7 @@ function _run( command )
  */
 function _initTheme()
 {
-    Theme.append_search_path(Local.path + '/icons');
+    Theme.append_search_path(Local.dir.get_child('icons').get_path());
 }
 
 /**

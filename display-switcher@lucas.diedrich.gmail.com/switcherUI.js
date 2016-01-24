@@ -14,7 +14,7 @@ let _displayHandler;
 const SwitcherManager = new Lang.Class({
 	Name: 'SwitcherManager',
 
-	_init: function() 
+	_init: function()
 	{
 		if( typeof _displayHandler === 'undefined' ||  
 				_displayHandler == null )
