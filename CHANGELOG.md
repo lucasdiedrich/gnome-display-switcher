@@ -1,3 +1,6 @@
+## Version 0.5.1:
+  - Fix: Renamed icons for working with Opensuse and Arch Linux. 
+
 ## Version 0.5:
   - Add: Fix files permissions. 
   - Add: Changed GTK init theme.

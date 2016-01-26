@@ -12,7 +12,7 @@ Display Switcher is an extension for gnome-shell 3.12+ that provides an easy and
 
 ### Version 
 
-[0.5 - See changelog](https://github.com/lucasdiedrich/gnome-display-switcher/blob/master/CHANGELOG.md)
+[0.5.1 - See changelog](https://github.com/lucasdiedrich/gnome-display-switcher/blob/master/CHANGELOG.md)
 
 ### Installation
 
@@ -23,7 +23,7 @@ Installation using Gnome's Extension Website:
 Installation using terminal: 
 
 ```sh
-bash -c 'wget -O install-ds.sh https://github.com/lucasdiedrich/gnome-display-switcher/raw/master/install-ds.sh && chmod +x install-ds.sh && ./install-ds.sh "0.5"'
+bash -c 'wget -O install-ds.sh https://github.com/lucasdiedrich/gnome-display-switcher/raw/master/install-ds.sh && chmod +x install-ds.sh && ./install-ds.sh'
 
 ```
 
