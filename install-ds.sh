@@ -18,6 +18,7 @@ v_file="display-switcher-$v_version.tar.gz"
 #
 # Install Area
 #
+mkdir -p $v_extfolder
 echo "Entering local Gnome Shell Extensions folder..."
 cd $v_extfolder
 

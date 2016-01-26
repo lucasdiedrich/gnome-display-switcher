@@ -66,11 +66,11 @@ const DisplayHandler = new Lang.Class({
     },
     _provModes: function()
     {
- 		this.MODE_PRIMARY 	= new Mode(0,_("Primary only"),CMD_PRIMARY,"display-primary");
-	  	this.MODE_MIRROR 	= new Mode(1,_("Mirrored"),CMD_MIRROR,"display-mirrored");
-	  	this.MODE_EXTEND_L 	= new Mode(2,_("Extended"),CMD_EXTEND_LEFT,"display-extented");
-	  	this.MODE_EXTEND_R 	= new Mode(2,_("Extended"),CMD_EXTEND_RIGHT,"display-extented");
-	  	this.MODE_SECONDARY = new Mode(3,_("Secondary only"),CMD_SECONDARY,"display-secondary");
+ 		this.MODE_PRIMARY 	= new Mode(0,_("Primary only"),CMD_PRIMARY,"ds-primary");
+	  	this.MODE_MIRROR 	= new Mode(1,_("Mirrored"),CMD_MIRROR,"ds-mirrored");
+	  	this.MODE_EXTEND_L 	= new Mode(2,_("Extended"),CMD_EXTEND_LEFT,"ds-extended");
+	  	this.MODE_EXTEND_R 	= new Mode(2,_("Extended"),CMD_EXTEND_RIGHT,"ds-extended");
+	  	this.MODE_SECONDARY = new Mode(3,_("Secondary only"),CMD_SECONDARY,"ds-secondary");
 
     	this._modes.push(this.MODE_PRIMARY);
     	this._modes.push(this.MODE_MIRROR);
