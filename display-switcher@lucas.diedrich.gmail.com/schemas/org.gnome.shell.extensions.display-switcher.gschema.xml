@@ -17,7 +17,7 @@
 	    </key>
 	  	
 	  	<key name="laptop-mode" type="b">
-	    	<default>true</default>
+	    	<default>false</default>
 	    </key>
 	</schema>
 </schemalist>
