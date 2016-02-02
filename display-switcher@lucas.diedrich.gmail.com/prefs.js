@@ -90,7 +90,7 @@ const DSSettingsWidget = new Lang.Class({
         let switcher_isize  = this.builder.get_object("dsui_size");
         let switcher_preview  = this.builder.get_object("dsui_preview");
 
-        switcher_preview.set_from_gicon(Gio.icon_new_for_string(Utils._getDirPath("./icons/ds-display.svg")), 
+        switcher_preview.set_from_gicon(Gio.icon_new_for_string(Utils._getDirPath("./icons/ds-display-b.svg")), 
                                             this.settings.get_int('mode-icon-size'));
 
         switcher_isize.set_value(this.settings.get_int('mode-icon-size'));

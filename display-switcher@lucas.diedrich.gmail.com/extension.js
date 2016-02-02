@@ -83,7 +83,7 @@ const DisplayExtension = new Lang.Class({
 		{
         	let _appIcon = new St.Icon({ style_class: 'system-status-icon',
 										 icon_name: 'ds-display'});
-        	_appIcon.set_gicon(Gio.icon_new_for_string(Utils._getDirPath("./icons/ds-display.svg")));
+        	_appIcon.set_gicon(Gio.icon_new_for_string(Utils._getDirPath("./icons/ds-display-w.svg")));
 
 			this._topIcon = new St.Bin({ style_class: 'panel-button',
 										reactive: true,
