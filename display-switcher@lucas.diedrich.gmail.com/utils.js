@@ -46,7 +46,7 @@ function _run( command )
  */
 function _initTheme()
 {
-    Theme.append_search_path(Local.dir.get_child('icons').get_path());
+    Theme.append_search_path(this._getDirPath('icons'));
 }
 
 /**
@@ -59,6 +59,20 @@ function _getXRandr()
 {
   return this._run(XRANDR_PATH).callback;
 }
+
+/**
+ * _getText:
+ * @isPref: (optional): if its pref.js which is requesting.
+ * Returns the initialiazed translation Gettext.
+ */
+function _getText(isPref)
+{
+  if (isPref) {
+    this._initTranslations();
+  }
+  return Gettext.domain(Local.metadata['gettext-domain']).gettext;
+}
+
 
 /**
  * _initTranslations:
@@ -80,6 +94,22 @@ function _initTranslations(domain)
         Gettext.bindtextdomain(domain, localeDir.get_path());
     else
         Gettext.bindtextdomain(domain, Config.LOCALEDIR);
+}
+
+/**
+ * _getDirPath:
+ * @relPath: the relative path to the folder dir 
+ *
+ * Verify if the relative path to the folder exists, if it does return the
+ * path used by Gnome.
+ */
+function _getDirPath(relPath)
+{
+    let dir = Local.dir.get_child(relPath);
+    if (dir.query_exists(null))
+        return dir.get_path();
+    else
+        throw new Error(_("Unable to load path: ") + relPath);
 }
 
 /**

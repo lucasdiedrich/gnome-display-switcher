@@ -3,10 +3,9 @@
 const ExtensionUtils = imports.misc.extensionUtils,
 	  Main  	= imports.ui.main,
 	  Local		= ExtensionUtils.getCurrentExtension(),
-	  Gettext 	= imports.gettext.domain(Local.metadata['gettext-domain']),
       Lang 		= imports.lang,
 	  Utils		= Local.imports.utils,
- 	  _ 		= Gettext.gettext;
+ 	  _ 		= Utils._getText();
 
 const XRANDR 			= Utils._getXRandr(),
 	  PRIM_AUTO			= "	--output #PRIMARY --auto",
@@ -25,7 +24,6 @@ const EXP_EDP  	 = "eDP",
 	  EXP_DISC 	 = "disconnected",
 	  EXP_PRIM 	 = "primary",
 	  EXP_MIRROR = "+0+0";
-
 
 const Mode = new Lang.Class({
 	Name: 'Mode',
@@ -58,9 +56,9 @@ const DisplayHandler = new Lang.Class({
     _init: function() 
     {
     	this._modes 	 = [];
-    	this._is_desktop = true;
     	this._primary 	 = null;
     	this._secondary  = null;
+        this._settings	 = Utils._getSettings();
 
     	this._provModes();
     },
@@ -130,7 +128,7 @@ const DisplayHandler = new Lang.Class({
 			if ( result.success )
 				this._mode = mode;
 		} else
-			log("Invalid type of mode");
+			throw new Error(_("Invalid type of mode"));
 	},
 	_parse: function(callback)
 	{
@@ -175,10 +173,11 @@ const DisplayHandler = new Lang.Class({
 					if ( display._name.indexOf(EXP_EDP) > -1 )
 					{
 						this._primary = display;
-						this._is_desktop = false;
+						// this._is_desktop = false;
+						this._settings.set_boolean('laptop-mode', true);
 			 		} 
 			 		else
-						display._marked && this._is_desktop ? 
+						display._marked && ! this._settings.get_boolean('laptop-mode') ? 
 							this._primary = display : 
 								this._secondary = display;
 				}

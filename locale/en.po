@@ -1,0 +1,78 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: display-switcher\n"
+"POT-Creation-Date: 2015-10-15 14:04-0300\n"
+"PO-Revision-Date: 2016-02-01 01:13-0200\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.5\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Last-Translator: \n"
+"Language: en\n"
+
+#: ../display-switcher@lucas.diedrich.gmail.com/displayHandler.js:98
+msgid "Primary only"
+msgstr "Primary only"
+
+#: ../display-switcher@lucas.diedrich.gmail.com/displayHandler.js:99
+msgid "Mirrored"
+msgstr "Mirror"
+
+#: ../display-switcher@lucas.diedrich.gmail.com/displayHandler.js:100
+msgid "Extended"
+msgstr "Extend"
+
+#: ../display-switcher@lucas.diedrich.gmail.com/displayHandler.js:101
+msgid "Secondary only"
+msgstr "Secondary only"
+
+#: ../display-switcher@lucas.diedrich.gmail.com/displayHandler.js:217
+msgid "Sorry, for some reason we could not execute the following command: "
+msgstr "Sorry, for some reason we could not execute the following command: "
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "Switch shortcut"
+msgstr "Shortcut: "
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "Shortcut command which will triggers the switch menu"
+msgstr "Shortcut command which will triggers the switch menu."
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "Show top icon"
+msgstr "Running icon: "
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "A top icon which show if the extension has been loaded succesfully"
+msgstr "A top icon which show if the extension has been loaded succesfully."
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "Switch icon size"
+msgstr "Icon size: "
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "The icon size used on switch menu"
+msgstr "The icon size used on switch menu."
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "The preview of the above size"
+msgstr "The preview of the above size."
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "Laptop mode"
+msgstr "Laptop mode: "
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "Is this extension running on laptop"
+msgstr "Is this extension running on laptop?"
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "True"
+msgstr "True"
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "False"
+msgstr "False"

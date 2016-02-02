@@ -1,5 +1,7 @@
 
-const 	Main  	= imports.ui.main,
+const	St      = imports.gi.St,
+		Gio     = imports.gi.Gio,
+	 	Main  	= imports.ui.main,
 		Lang  	= imports.lang,
 		Meta  	= imports.gi.Meta,
 		Shell   = imports.gi.Shell,
@@ -77,8 +79,22 @@ const DisplayExtension = new Lang.Class({
 	 */	
 	_loadicon: function()
 	{
-		this._topIcon = this._switcherManager._getIcon();
-		Main.panel._rightBox.insert_child_at_index(this._topIcon, 0);    
+		if (typeof this._topIcon === 'undefined' || this._topIcon == null)
+		{
+        	let _appIcon = new St.Icon({ style_class: 'system-status-icon',
+										 icon_name: 'ds-display'});
+        	_appIcon.set_gicon(Gio.icon_new_for_string(Utils._getDirPath("./icons/ds-display.svg")));
+
+			this._topIcon = new St.Bin({ style_class: 'panel-button',
+										reactive: true,
+									    can_focus: true,
+									    x_fill: true,
+									    y_fill: true,
+									    track_hover: true });
+
+			this._topIcon.set_child(_appIcon);
+			Main.panel._rightBox.insert_child_at_index(this._topIcon, 0);
+		}
 	},
 	_unloadicon: function()
 	{
@@ -102,14 +118,14 @@ const DisplayExtension = new Lang.Class({
 /**
  *	Required methods for a gnome-shell extension.
  */
-function init() {}
-
-function enable()
+function init() 
 {
 	if( !IS_WAYLAND )
 		if( typeof _extension === 'undefined' || _extension == null )
 			_extension = new DisplayExtension();
 }
+
+function enable() { }
 
 function disable()
 {

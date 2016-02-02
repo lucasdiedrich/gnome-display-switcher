@@ -5,12 +5,11 @@ const	St             = imports.gi.St,
 		SwitcherPopup  = imports.ui.switcherPopup,
 		ExtensionUtils = imports.misc.extensionUtils,
 		Local          = ExtensionUtils.getCurrentExtension(),
-		Display        = Local.imports.displayHandler;
-
-const 	POPUP_ICON_SIZE = 116;
+		Display        = Local.imports.displayHandler,
+		Utils          = Local.imports.utils;
 
 let _displayHandler;
-
+	
 const SwitcherManager = new Lang.Class({
 	Name: 'SwitcherManager',
 
@@ -31,19 +30,6 @@ const SwitcherManager = new Lang.Class({
 		this._popup.actor.connect('destroy', Lang.bind(this, function() {
 												this._popup = null;
 											}));		
-	},
-	_getIcon: function()
-	{
-		let icon = new St.Bin({ style_class: 'display-panel-icon',
-								reactive: true,
-								can_focus: false,
-								x_fill: true,
-								y_fill: false,
-								track_hover: false });
-
-		icon.set_child(new St.Icon({ icon_name: 'preferences-desktop-display-symbolic',
-									 style_class: 'system-status-icon' }));
-		return icon;
 	}
 });
 
@@ -95,11 +81,16 @@ const ModesList = new Lang.Class({
 	_init : function(modes) 
 	{
 		this.parent(true);
+		this._settings = Utils._getSettings();
+
 		for each (let mode in modes)
 			this._addIcon(mode);
+
 	},
 	_addIcon : function(mode) 
 	{
+		let	POPUP_ICON_SIZE = this._settings.get_int('mode-icon-size');
+
 		let box   = new St.BoxLayout({ style_class: 'display-switcher-mode', vertical: true }),
 			icon  = new St.Icon({ icon_name: mode._icon, icon_size: POPUP_ICON_SIZE }),
 			text  = new St.Label({ text: mode._name });

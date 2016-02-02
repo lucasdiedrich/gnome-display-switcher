@@ -1,0 +1,78 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: display-switcher\n"
+"POT-Creation-Date: 2015-10-14 23:24-0300\n"
+"PO-Revision-Date: 2016-02-01 19:39-0200\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.6\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Last-Translator: \n"
+"Language: pt_BR\n"
+
+#: ../display-switcher@lucas.diedrich.gmail.com/displayHandler.js:98
+msgid "Primary only"
+msgstr "Somente primário"
+
+#: ../display-switcher@lucas.diedrich.gmail.com/displayHandler.js:99
+msgid "Mirrored"
+msgstr "Espelhar"
+
+#: ../display-switcher@lucas.diedrich.gmail.com/displayHandler.js:100
+msgid "Extended"
+msgstr "Extender"
+
+#: ../display-switcher@lucas.diedrich.gmail.com/displayHandler.js:101
+msgid "Secondary only"
+msgstr "Somente secundário"
+
+#: ../display-switcher@lucas.diedrich.gmail.com/displayHandler.js:217
+msgid "Sorry, for some reason we could not execute the following command: "
+msgstr "Desculpe, por alguma razão não conseguimos executar este comando: "
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "Switch shortcut"
+msgstr "Atalho:"
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "Shortcut command which will triggers the switch menu"
+msgstr "Atalho que mostrará o popup de troca de telas. "
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "Show top icon"
+msgstr "Ícone de execução: "
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "A top icon which show if the extension has been loaded succesfully"
+msgstr "Um ícone que mostrará se o a extensão foi carregada corretamente."
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "Switch icon size"
+msgstr "Tamanho do ícone: "
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "The icon size used on switch menu"
+msgstr "Tamanho do ícone que será mostrado no menu."
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "The preview of the above size"
+msgstr "Pré-visualização do ícone que será mostrado no popup."
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "Laptop mode"
+msgstr "Modo Laptop: "
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "Is this extension running on laptop"
+msgstr "Esta extensão está sendo executada em um Laptop?"
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "True"
+msgstr "Habilitado"
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "False"
+msgstr "Desabilitado"
