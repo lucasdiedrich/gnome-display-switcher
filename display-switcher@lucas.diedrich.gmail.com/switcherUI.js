@@ -62,9 +62,26 @@ const ModesPopup = new Lang.Class({
 			state 		 = mods & this._modifierMask,
 			event_key	 = event.get_key_symbol();
 
-		if ( event_key == Clutter.Return && state == 0 )
-			this._finish(event.get_time());
+		if ( this._selectedIndex == 2 )
+		{
+		 	if (event_key == Clutter.Up)
+		 	{
+		 		this._selectedIndex+=2;
+		 		this._finish(event.get_time());
+		 	}
+		 	else 
+		 		if (event_key == Clutter.Down)
+		 		{
+		 			this._selectedIndex+=3;
+					this._finish(event.get_time());
+		 		} 
+		}
 
+		if ( (event_key == Clutter.Return && state == 0) ||
+				(this._selectedIndex == 2 && 
+					(event_key == Clutter.Up || event_key == Clutter.Down)) )
+			this._finish(event.get_time());
+		
 		return Clutter.EVENT_STOP;
 	},    
 	_finish : function(time) 
@@ -83,8 +100,10 @@ const ModesList = new Lang.Class({
 		this.parent(true);
 		this._settings = Utils._getSettings();
 
-		for each (let mode in modes)
-			this._addIcon(mode);
+		for each (let mode in modes){
+			if (mode._visible)
+				this._addIcon(mode);
+		}
 
 	},
 	_addIcon : function(mode) 

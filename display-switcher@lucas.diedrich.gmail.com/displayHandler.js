@@ -16,8 +16,8 @@ const XRANDR 			= Utils._getXRandr(),
 	  CMD_MIRROR 		= XRANDR + PRIM_AUTO + SECO_AUTO + ' --same-as #PRIMARY',
 	  CMD_EXTEND_LEFT 	= XRANDR + PRIM_AUTO + SECO_AUTO + ' --left-of #PRIMARY',
 	  CMD_EXTEND_RIGHT  = XRANDR + PRIM_AUTO + SECO_AUTO + ' --right-of #PRIMARY',
-	  CMD_EXTEND_TOP 	= XRANDR + PRIM_AUTO + SECO_AUTO + ' --top-of #PRIMARY',
-	  CMD_EXTEND_BOTTOM = XRANDR + PRIM_AUTO + SECO_AUTO + ' --bottom-of #PRIMARY';
+	  CMD_EXTEND_TOP 	= XRANDR + PRIM_AUTO + SECO_AUTO + ' --above #PRIMARY',
+	  CMD_EXTEND_BOTTOM = XRANDR + PRIM_AUTO + SECO_AUTO + ' --below #PRIMARY';
 
 const EXP_EDP  	 = "eDP",
 	  EXP_VIRT 	 = "VIRTUAL",
@@ -27,12 +27,13 @@ const EXP_EDP  	 = "eDP",
 
 const Mode = new Lang.Class({
 	Name: 'Mode',
-    _init: function(index, name, cmd, iconName) 
+    _init: function(index, name, cmd, iconName, isVisible = true) 
     {
     	this._index		 = index;
     	this._name 		 = name;
     	this._cmd 		 = cmd;
     	this._icon 		 = iconName;
+        this._visible	 = isVisible;    	
     }
 });
 
@@ -59,7 +60,6 @@ const DisplayHandler = new Lang.Class({
     	this._primary 	 = null;
     	this._secondary  = null;
         this._settings	 = Utils._getSettings();
-
     	this._provModes();
     },
     _provModes: function()
@@ -68,12 +68,16 @@ const DisplayHandler = new Lang.Class({
 	  	this.MODE_MIRROR 	= new Mode(1,_("Mirrored"),CMD_MIRROR,"ds-mirrored");
 	  	this.MODE_EXTEND_L 	= new Mode(2,_("Extended"),CMD_EXTEND_LEFT,"ds-extended");
 	  	this.MODE_EXTEND_R 	= new Mode(2,_("Extended"),CMD_EXTEND_RIGHT,"ds-extended");
+	  	this.MODE_EXTEND_T 	= new Mode(4,_("Extended"),CMD_EXTEND_TOP,"ds-extended",false);
+	  	this.MODE_EXTEND_B 	= new Mode(5,_("Extended"),CMD_EXTEND_BOTTOM,"ds-extended",false);
 	  	this.MODE_SECONDARY = new Mode(3,_("Secondary only"),CMD_SECONDARY,"ds-secondary");
 
     	this._modes.push(this.MODE_PRIMARY);
     	this._modes.push(this.MODE_MIRROR);
     	this._modes.push(this.MODE_EXTEND_L);
     	this._modes.push(this.MODE_SECONDARY);
+    	this._modes.push(this.MODE_EXTEND_T);
+    	this._modes.push(this.MODE_EXTEND_B);
     },
 	_getMode: function() 
 	{
@@ -124,7 +128,7 @@ const DisplayHandler = new Lang.Class({
 				cmd = cmd.replace(/\#SECONDARY/g, this._secondary._name);
 
 			let result 	= Utils._run(cmd);
-		
+
 			if ( result.success )
 				this._mode = mode;
 		} else
@@ -173,7 +177,6 @@ const DisplayHandler = new Lang.Class({
 					if ( display._name.indexOf(EXP_EDP) > -1 )
 					{
 						this._primary = display;
-						// this._is_desktop = false;
 						this._settings.set_boolean('laptop-mode', true);
 			 		} 
 			 		else
