@@ -1,6 +1,5 @@
 /* 
  *   Peaces of code based on: 
- *   https://isacdaavid.info/code/widget_blocker
  *   https://github.com/awamper/text-translator/
  */
 const   Gio     = imports.gi.Gio,
@@ -102,8 +101,8 @@ const DSSettingsWidget = new Lang.Class({
         }));
 
         this.pack_start(main_container, true, true, 0);
+        
         this.settings.bind("show-running-icon", show_icon , "active", Gio.SettingsBindFlags.DEFAULT);
-
         let shortcut_widget = new ShortcutWidget(tree_view, list_store);
     },
     _translate: function()

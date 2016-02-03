@@ -1,3 +1,6 @@
+## Version 0.6:
+  - Fix: Add custom configurations.
+
 ## Version 0.5.1:
   - Fix: Renamed icons for working with Opensuse and Arch Linux. 
 

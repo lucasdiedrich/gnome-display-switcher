@@ -32,3 +32,47 @@ msgstr "Sólo secundaria"
 #: ../display-switcher@lucas.diedrich.gmail.com/displayHandler.js:217
 msgid "Sorry, for some reason we could not execute the following command: "
 msgstr "Lo sentimos, pero por alguna razón no pudimos ejecutar el siguiente comando:"
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "Switch shortcut"
+msgstr ""
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "Shortcut command which will triggers the switch menu"
+msgstr ""
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "Show top icon"
+msgstr ""
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "A top icon which show if the extension has been loaded succesfully"
+msgstr ""
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "Switch icon size"
+msgstr ""
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "The icon size used on switch menu"
+msgstr ""
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "The preview of the above size"
+msgstr ""
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "Laptop mode"
+msgstr ""
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "Is this extension running on laptop"
+msgstr ""
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "True"
+msgstr ""
+
+#: ../display-switcher@lucas.diedrich.gmail.com/prefs.js
+msgid "False"
+msgstr ""

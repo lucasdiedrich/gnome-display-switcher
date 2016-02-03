@@ -5,14 +5,14 @@ Display Switcher is an extension for gnome-shell 3.12+ that provides an easy and
 
   - Fast way to select display monitors.
   - You can choose what you want and not just pressing praying for it.
-  - Just press Super + I.
+  - Just press Super + I or custom trigger.
 
 ![alt tag](https://github.com/lucasdiedrich/gnome-display-switcher/raw/master/demo.jpg)
 
 
 ### Version 
 
-[0.5.1 - See changelog](https://github.com/lucasdiedrich/gnome-display-switcher/blob/master/CHANGELOG.md)
+[0.6 - See changelog](https://github.com/lucasdiedrich/gnome-display-switcher/blob/master/CHANGELOG.md)
 
 ### Installation
 
@@ -35,13 +35,9 @@ Want to contribute? Great! Any kind of contribution is valid. See the Contributi
 
 ### Todos
 
- - Fix the TODOS on source code.
- - Make tests over Ubuntu, Fedora and Open-suse.
- - Make tests over older version of gnome-shell to see if works and add support.
  - Add OSD notification on which display.
  - Auto change configuration based on actual displays.
  - Auto change default audio board in case of HDMI diplays.
- - Add an custom configuration.
 
 ###	Thanks
 

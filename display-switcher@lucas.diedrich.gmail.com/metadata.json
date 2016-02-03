@@ -6,6 +6,6 @@
 	"uuid": "display-switcher@lucas.diedrich.gmail.com",
 	"gettext-domain": "gnome-shell-extension-display-switcher",
 	"settings-schema": "org.gnome.shell.extensions.display-switcher",
-	"version": "0.5.1",
+	"version": "0.6",
 	"url": "https://github.com/lucasdiedrich/gnome-display-switcher"
 }

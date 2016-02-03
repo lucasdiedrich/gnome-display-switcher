@@ -41,6 +41,8 @@ const DisplayExtension = new Lang.Class({
 
 		if ( this._show_running_icon ) 
 			this._loadicon();
+		else
+			this._unloadicon();
 	},
 	/**
 	 * _show:
@@ -82,24 +84,27 @@ const DisplayExtension = new Lang.Class({
 		if (typeof this._topIcon === 'undefined' || this._topIcon == null)
 		{
         	let _appIcon = new St.Icon({ style_class: 'system-status-icon',
-										 icon_name: 'ds-display'});
-        	_appIcon.set_gicon(Gio.icon_new_for_string(Utils._getDirPath("./icons/ds-display-w.svg")));
+										 icon_name: 'ds-display-w'});
 
 			this._topIcon = new St.Bin({ style_class: 'panel-button',
 										reactive: true,
 									    can_focus: true,
 									    x_fill: true,
 									    y_fill: true,
-									    track_hover: true });
+									    track_hover: true,
+									    child: _appIcon });
 
-			this._topIcon.set_child(_appIcon);
 			Main.panel._rightBox.insert_child_at_index(this._topIcon, 0);
 		}
 	},
 	_unloadicon: function()
 	{
 		if ( typeof this._topIcon !== 'undefined' && this._topIcon != null )
+		{
+			Main.panel._rightBox.remove_child(this._topIcon);
 			this._topIcon = null;
+		}
+
 	},
 	/**
 	 * _destroy:

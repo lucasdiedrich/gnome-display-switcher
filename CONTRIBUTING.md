@@ -6,7 +6,5 @@ Just pull, dev, and make a push request. If you cant do this try translate, or o
 ### Help command: debug gnome-shell extensions log
 
 ```sh
-journalctl /usr/bin/gnome-session -f -o cat 
+journalctl /usr/bin/gnome-shell -f -o cat 
 ```
-
-![alt tag](http://i.ytimg.com/vi/Z6gG3tKDBlk/maxresdefault.jpg)
