@@ -62,24 +62,19 @@ const ModesPopup = new Lang.Class({
 			state 		 = mods & this._modifierMask,
 			event_key	 = event.get_key_symbol();
 
+		let pre_index = this._selectedIndex;
+		// Verifies if it is Extended Mode and Up or Down Keys where pressed
 		if ( this._selectedIndex == 2 )
 		{
 		 	if (event_key == Clutter.Up)
-		 	{
 		 		this._selectedIndex+=2;
-		 		this._finish(event.get_time());
-		 	}
 		 	else 
 		 		if (event_key == Clutter.Down)
-		 		{
 		 			this._selectedIndex+=3;
-					this._finish(event.get_time());
-		 		} 
 		}
 
-		if ( (event_key == Clutter.Return && state == 0) ||
-				(this._selectedIndex == 2 && 
-					(event_key == Clutter.Up || event_key == Clutter.Down)) )
+		if ((event_key == Clutter.Return && state == 0) ||
+				(pre_index == 2 && (event_key == Clutter.Up || event_key == Clutter.Down)))
 			this._finish(event.get_time());
 		
 		return Clutter.EVENT_STOP;
