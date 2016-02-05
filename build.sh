@@ -28,5 +28,6 @@ done
 echo "Compacting in tar.gz and zip"
 filename="display-switcher-$VER"
 tar -zcvf $filename.tar.gz $EXT
-zip -r $filename.zip $EXT/*
+cd $EXT
+zip -r ../$filename.zip *
 echo "Done"

@@ -66,7 +66,7 @@ const DisplayHandler = new Lang.Class({
     {
  		this.MODE_PRIMARY 	= new Mode(0,_("Primary only"),CMD_PRIMARY,"ds-primary");
 	  	this.MODE_MIRROR 	= new Mode(1,_("Mirrored"),CMD_MIRROR,"ds-mirrored");
-	  	this.MODE_EXTEND_L 	= new Mode(2,_("Extended"),CMD_EXTEND_LEFT,"ds-extended-l");
+	  	this.MODE_EXTEND_L 	= new Mode(2,_("Extended"),CMD_EXTEND_LEFT,"ds-extended");
 	  	this.MODE_EXTEND_R 	= new Mode(2,_("Extended"),CMD_EXTEND_RIGHT,"ds-extended-r");
 	  	this.MODE_EXTEND_T 	= new Mode(4,_("Extended"),CMD_EXTEND_TOP,"ds-extended-t",false);
 	  	this.MODE_EXTEND_B 	= new Mode(5,_("Extended"),CMD_EXTEND_BOTTOM,"ds-extended-b",false);

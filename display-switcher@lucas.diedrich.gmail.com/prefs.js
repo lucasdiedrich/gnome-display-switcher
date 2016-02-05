@@ -77,67 +77,62 @@ const DSSettingsWidget = new Lang.Class({
         this.builder = new Gtk.Builder();
         this.builder.add_from_file(Utils._getDirPath('ui/prefs-dialog'));
 
+        this._load();
         this._translate();
-        this._setValues();
     },
-    _setValues: function()
+    _load: function()
     {
         let main_container = this.builder.get_object("dsui_main");
-        let tree_view  = this.builder.get_object("dsui_treeview");
         let list_store = this.builder.get_object("dsui_store");
-        let show_icon  = this.builder.get_object("dsui_icon");
-        let switcher_isize  = this.builder.get_object("dsui_size");
-        let switcher_preview  = this.builder.get_object("dsui_preview");
 
-        switcher_preview.set_from_gicon(Gio.icon_new_for_string(Utils._getDirPath("./icons/ds-display-b.svg")), 
+        this.l_show_icon = this.builder.get_object("dsui_icon_l");
+        this.l_treeview  = this.builder.get_object("dsui_treeview_l");    
+        this.l_laptop    = this.builder.get_object("dsui_laptop_l");
+        this.l_size      = this.builder.get_object("dsui_size_l");
+
+        this.f_show_icon = this.builder.get_object("dsui_icon");
+        this.f_treeview  = this.builder.get_object("dsui_treeview");    
+        this.f_laptop    = this.builder.get_object("dsui_laptop_f");
+        this.f_size      = this.builder.get_object("dsui_size");
+        this.f_preview   = this.builder.get_object("dsui_preview");
+
+        this.f_preview.set_from_gicon(Gio.icon_new_for_string(Utils._getDirPath("./icons/ds-display-b.svg")), 
                                             this.settings.get_int('mode-icon-size'));
 
-        switcher_isize.set_value(this.settings.get_int('mode-icon-size'));
-        switcher_preview.set_pixel_size(this.settings.get_int('mode-icon-size'));
+        this.f_size.set_value(this.settings.get_int('mode-icon-size'));
+        this.f_preview.set_pixel_size(this.settings.get_int('mode-icon-size'));
 
-        switcher_isize.connect('value-changed', Lang.bind(this, function(scalable) {
+        this.f_size.connect('value-changed', Lang.bind(this, function(scalable) {
             this.settings.set_int('mode-icon-size', scalable.get_value());
-            switcher_preview.set_pixel_size(this.settings.get_int('mode-icon-size'));
+            this.f_preview.set_pixel_size(this.settings.get_int('mode-icon-size'));
         }));
 
         this.pack_start(main_container, true, true, 0);
         
-        this.settings.bind("show-running-icon", show_icon , "active", Gio.SettingsBindFlags.DEFAULT);
-        let shortcut_widget = new ShortcutWidget(tree_view, list_store);
+        this.settings.bind("show-running-icon", f_show_icon , "active", Gio.SettingsBindFlags.DEFAULT);
+        let shortcut_widget = new ShortcutWidget(f_treeview, list_store);
     },
     _translate: function()
     {
-        let l_show_icon = this.builder.get_object("dsui_icon_l");
-        let l_treeview  = this.builder.get_object("dsui_treeview_l");    
-        let l_laptop    = this.builder.get_object("dsui_laptop_l");
-        let l_size      = this.builder.get_object("dsui_size_l");
+        this.l_show_icon.set_text(_("Show top icon"));
+        this.l_show_icon.set_tooltip_text(_("A top icon which show if the extension has been loaded succesfully"));
+        this.f_show_icon.set_tooltip_text(_("A top icon which show if the extension has been loaded succesfully"));
 
-        let f_show_icon = this.builder.get_object("dsui_icon");
-        let f_treeview  = this.builder.get_object("dsui_treeview");    
-        let f_laptop    = this.builder.get_object("dsui_laptop_f");
-        let f_size      = this.builder.get_object("dsui_size");
-        let f_preview   = this.builder.get_object("dsui_preview");
+        this.l_treeview.set_text(_("Switch shortcut"));
+        this.l_treeview.set_tooltip_text(_("Shortcut command which will triggers the switch menu"));
+        this.f_treeview.set_tooltip_text(_("Shortcut command which will triggers the switch menu"));
+        this.l_laptop.set_text(_("Laptop mode"));
+        this.l_laptop.set_tooltip_text(_("Is this extension running on laptop"));
+        this.f_laptop.set_tooltip_text(_("Is this extension running on laptop"));                
 
-        log(_("Show top icon"));
-        l_show_icon.set_text(_("Show top icon"));
-        l_show_icon.set_tooltip_text(_("A top icon which show if the extension has been loaded succesfully"));
-        f_show_icon.set_tooltip_text(_("A top icon which show if the extension has been loaded succesfully"));
-
-        l_treeview.set_text(_("Switch shortcut"));
-        l_treeview.set_tooltip_text(_("Shortcut command which will triggers the switch menu"));
-        f_treeview.set_tooltip_text(_("Shortcut command which will triggers the switch menu"));
-        l_laptop.set_text(_("Laptop mode"));
-        l_laptop.set_tooltip_text(_("Is this extension running on laptop"));
-        f_laptop.set_tooltip_text(_("Is this extension running on laptop"));                
-
-        l_size.set_text(_("Switch icon size"));
-        l_size.set_tooltip_text(_("The icon size used on switch menu"));
-        f_size.set_tooltip_text(_("The icon size used on switch menu"));   
+        this.l_size.set_text(_("Switch icon size"));
+        this.l_size.set_tooltip_text(_("The icon size used on switch menu"));
+        this.f_size.set_tooltip_text(_("The icon size used on switch menu"));   
 
         if(this.settings.get_boolean('laptop-mode'))
-            f_laptop.set_text(_("True"));
+            this.f_laptop.set_text(_("True"));
         else
-            f_laptop.set_text(_("False"));
+            this.f_laptop.set_text(_("False"));
 
         this.settings.get_int('mode-icon-size')
         f_preview.set_tooltip_text(_("The preview of the above size"));

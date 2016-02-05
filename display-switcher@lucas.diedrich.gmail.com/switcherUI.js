@@ -9,16 +9,36 @@ const	St             = imports.gi.St,
 		Utils          = Local.imports.utils;
 
 let _displayHandler;
-	
+
+
+/**
+ * Class: SwitcherManager
+ *
+ * This class handle the bridge between bind pressed and the Switcher Popup.
+ */
 const SwitcherManager = new Lang.Class({
 	Name: 'SwitcherManager',
 
+	/**
+	 * _init:
+	 *
+	 * Instantiate one new and unique @DisplayHandler, which has all display modes and run cmds.
+	 */
 	_init: function()
 	{
 		if( typeof _displayHandler === 'undefined' ||  
 				_displayHandler == null )
 			_displayHandler = new Display.DisplayHandler();
 	},
+	/**
+	 * _show:
+	 * @backward: Passed from keybind and used by SwitcherPopup. (obrigatory)
+	 * @binding: Passed from keybind and used by SwitcherPopup. (obrigatory)
+	 * @mask: Passed from keybind and used by SwitcherPopup. (obrigatory)	 
+	 * 
+	 * Select the active mode loaded and pass to show the SwitcherPopup.
+	 *
+	 */	
 	_show: function(backward, binding, mask)
 	{
 		if ( !this._popup ) 
@@ -44,12 +64,12 @@ const ModesPopup = new Lang.Class({
 	},
 	_keyPressHandler: function(keysym, action) 
 	{
-		if ( keysym == Clutter.Left ||
-				keysym == Clutter.ISO_Left_Tab )
+		if ( (keysym == Clutter.Left ||
+				keysym == Clutter.ISO_Left_Tab) && this._selectedIndex > 0 )
 			this._select(this._previous());
 		else 
-			if ( keysym == Clutter.Right || 
-					keysym == Clutter.Tab )
+			if ( (keysym == Clutter.Right || 
+					keysym == Clutter.Tab) && this._selectedIndex < 3 )
 				this._select(this._next());
 			else
 				return Clutter.EVENT_PROPAGATE;
@@ -62,15 +82,15 @@ const ModesPopup = new Lang.Class({
 			state 		 = mods & this._modifierMask,
 			event_key	 = event.get_key_symbol();
 
-		let pre_index = this._selectedIndex;
 		// Verifies if it is Extended Mode and Up or Down Keys where pressed
+		let pre_index = this._selectedIndex;
 		if ( this._selectedIndex == 2 )
 		{
 		 	if (event_key == Clutter.Up)
-		 		this._selectedIndex+=2;
+		 		this._selectedIndex += 2;
 		 	else 
 		 		if (event_key == Clutter.Down)
-		 			this._selectedIndex+=3;
+		 			this._selectedIndex += 3;
 		}
 
 		if ((event_key == Clutter.Return && state == 0) ||
@@ -105,8 +125,11 @@ const ModesList = new Lang.Class({
 	{
 		let	POPUP_ICON_SIZE = this._settings.get_int('mode-icon-size');
 
-		let box   = new St.BoxLayout({ style_class: 'display-switcher-mode', vertical: true }),
-			icon  = new St.Icon({ icon_name: mode._icon, icon_size: POPUP_ICON_SIZE }),
+		let box   = new St.BoxLayout({ style_class: 'display-switcher-box', 
+										vertical: true }),
+			icon  = new St.Icon({ style_class: 'display-switcher-mode', 
+									icon_name: mode._icon, 
+									icon_size: POPUP_ICON_SIZE }),
 			text  = new St.Label({ text: mode._name });
 
 		box.add(icon);

@@ -125,12 +125,15 @@ const DisplayExtension = new Lang.Class({
  */
 function init() 
 {
+
+}
+
+function enable() 
+{
 	if( !IS_WAYLAND )
 		if( typeof _extension === 'undefined' || _extension == null )
 			_extension = new DisplayExtension();
 }
-
-function enable() { }
 
 function disable()
 {
