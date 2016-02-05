@@ -1,6 +1,6 @@
 {
 	"name": "Display Switcher",
-	"description": "Switch between display modes using the powerfull xRandr", 
+	"description": "Switch between display modes using xRandr", 
 	"shell-version": ["3.12", "3.14", "3.16", "3.18"], 
 	"original-author": "Lucas Diedrich",
 	"uuid": "display-switcher@lucas.diedrich.gmail.com",
