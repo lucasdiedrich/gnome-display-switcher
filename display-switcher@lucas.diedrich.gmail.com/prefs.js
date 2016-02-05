@@ -109,8 +109,8 @@ const DSSettingsWidget = new Lang.Class({
 
         this.pack_start(main_container, true, true, 0);
         
-        this.settings.bind("show-running-icon", f_show_icon , "active", Gio.SettingsBindFlags.DEFAULT);
-        let shortcut_widget = new ShortcutWidget(f_treeview, list_store);
+        this.settings.bind("show-running-icon", this.f_show_icon , "active", Gio.SettingsBindFlags.DEFAULT);
+        let shortcut_widget = new ShortcutWidget(this.f_treeview, list_store);
     },
     _translate: function()
     {
@@ -135,7 +135,7 @@ const DSSettingsWidget = new Lang.Class({
             this.f_laptop.set_text(_("False"));
 
         this.settings.get_int('mode-icon-size')
-        f_preview.set_tooltip_text(_("The preview of the above size"));
+        this.f_preview.set_tooltip_text(_("The preview of the above size"));
     },
 });
 
