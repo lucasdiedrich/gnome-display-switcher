@@ -19,43 +19,24 @@
   <object class="GtkBox" id="dsui_main">
     <property name="visible">True</property>
     <property name="can_focus">False</property>
-    <property name="margin_left">5</property>
-    <property name="margin_right">5</property>
-    <property name="margin_top">5</property>
-    <property name="hexpand">True</property>
-    <property name="vexpand">True</property>
+    <property name="halign">center</property>
+    <property name="valign">center</property>
     <property name="resize_mode">immediate</property>
     <property name="orientation">vertical</property>
+    <property name="baseline_position">top</property>
     <child>
       <object class="GtkGrid" id="grid1">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="opacity">0.97999999999999998</property>
+        <property name="halign">start</property>
+        <property name="valign">start</property>
         <property name="margin_left">15</property>
         <property name="margin_right">15</property>
-        <property name="margin_top">15</property>
-        <property name="margin_bottom">15</property>
         <property name="row_spacing">10</property>
         <property name="column_spacing">5</property>
-        <child>
-          <object class="GtkViewport" id="viewport1">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="hexpand">True</property>
-            <property name="vexpand">True</property>
-            <child>
-              <object class="GtkSwitch" id="dsui_icon">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="halign">start</property>
-              </object>
-            </child>
-          </object>
-          <packing>
-            <property name="left_attach">1</property>
-            <property name="top_attach">0</property>
-          </packing>
-        </child>
+        <property name="row_homogeneous">True</property>
+        <property name="column_homogeneous">True</property>
         <child>
           <object class="GtkLabel" id="dsui_size_l">
             <property name="visible">True</property>
@@ -112,7 +93,6 @@
             <property name="width_request">125</property>
             <property name="visible">True</property>
             <property name="can_focus">True</property>
-            <property name="halign">start</property>
             <property name="model">dsui_store</property>
             <property name="headers_visible">False</property>
             <property name="search_column">0</property>
@@ -173,6 +153,16 @@
             <property name="top_attach">2</property>
           </packing>
         </child>
+        <child>
+          <object class="GtkSwitch" id="dsui_icon">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+          </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">0</property>
+          </packing>
+        </child>
       </object>
       <packing>
         <property name="expand">True</property>
@@ -195,8 +185,7 @@
       <object class="GtkImage" id="dsui_preview">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="hexpand">True</property>
-        <property name="vexpand">True</property>
+        <property name="margin_bottom">100</property>
         <property name="icon_name">video-display</property>
         <property name="use_fallback">True</property>
       </object>
