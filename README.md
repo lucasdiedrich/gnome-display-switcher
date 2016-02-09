@@ -12,7 +12,7 @@ Display Switcher is an extension for gnome-shell 3.12+ that provides an easy and
 
 ### Version 
 
-[0.6 - See changelog](https://github.com/lucasdiedrich/gnome-display-switcher/blob/master/CHANGELOG.md)
+[0.7 - See changelog](https://github.com/lucasdiedrich/gnome-display-switcher/blob/master/CHANGELOG.md)
 
 ### Installation
 
