@@ -18,6 +18,8 @@ const	SHOW_ICON      = "show-running-icon",
 		SHELL_VERSION  = Config.PACKAGE_VERSION.split('.')[1],
 		BINDING_FLAGS  = SHELL_VERSION <= 14 ? Shell.KeyBindingMode.NORMAL : Shell.ActionMode.NORMAL;
 
+const MessageTray = imports.ui.messageTray;
+
 let 	_extension;
 
 const DisplayExtension = new Lang.Class({
@@ -61,12 +63,14 @@ const DisplayExtension = new Lang.Class({
 	{
 		this._settings.connect('changed::' + SHOW_ICON, 
 								Lang.bind(this,this._checkIcon));
-
+/*
+		Main.layoutManager.connect('monitors-changed',
+								Lang.bind(this, log("Monitors has changed.")));*/
 		Main.wm.addKeybinding( SHORTCUT ,
 			this._settings,
 			META_FLAGS ,
 			BINDING_FLAGS,
-			Lang.bind(this, this._show));
+			Lang.bind(this, this._show));	
 	},
 	_unbind: function()
 	{
@@ -107,7 +111,7 @@ const DisplayExtension = new Lang.Class({
 	_checkIcon: function()
 	{
 		this._show_running_icon = this._settings.get_boolean(SHOW_ICON);
-		if ( this._show_running_icon ) 
+		if ( this._show_running_icon )
 			this._loadicon();
 		else
 			this._unloadicon();
