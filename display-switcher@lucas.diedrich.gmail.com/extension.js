@@ -35,14 +35,9 @@ const DisplayExtension = new Lang.Class({
 		Utils._initTheme();
 
 		this._settings = Utils._getSettings();
-		this._show_running_icon = this._settings.get_boolean(SHOW_ICON);
 		this._switcherManager = new SUI.SwitcherManager();
 		this._bind();
-
-		if ( this._show_running_icon ) 
-			this._loadicon();
-		else
-			this._unloadicon();
+		this._checkIcon();
 	},
 	/**
 	 * _show:
@@ -64,6 +59,9 @@ const DisplayExtension = new Lang.Class({
 	 */	
 	_bind: function()
 	{
+		this._settings.connect('changed::' + SHOW_ICON, 
+								Lang.bind(this,this._checkIcon));
+
 		Main.wm.addKeybinding( SHORTCUT ,
 			this._settings,
 			META_FLAGS ,
@@ -105,6 +103,14 @@ const DisplayExtension = new Lang.Class({
 			this._topIcon = null;
 		}
 
+	},
+	_checkIcon: function()
+	{
+		this._show_running_icon = this._settings.get_boolean(SHOW_ICON);
+		if ( this._show_running_icon ) 
+			this._loadicon();
+		else
+			this._unloadicon();
 	},
 	/**
 	 * _destroy:
