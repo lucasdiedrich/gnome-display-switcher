@@ -38,7 +38,7 @@ Want to contribute? Great! Any kind of contribution is valid. See the Contributi
  - Add OSD notification on which display.
  - Auto change configuration based on actual displays.
  - Auto change default audio board in case of HDMI diplays.
-
+ 
 ###	Thanks
 
 This extension couldn't be done without some help of some people and principle this peoples work, so, below you see the best extensions which i've been based so on. This extension may have some of the below projects code inside of it:

@@ -63,9 +63,10 @@ const DisplayExtension = new Lang.Class({
 	{
 		this._settings.connect('changed::' + SHOW_ICON, 
 								Lang.bind(this,this._checkIcon));
-/*
+
 		Main.layoutManager.connect('monitors-changed',
-								Lang.bind(this, log("Monitors has changed.")));*/
+								Lang.bind(this, this._switcherManager._refresh));
+
 		Main.wm.addKeybinding( SHORTCUT ,
 			this._settings,
 			META_FLAGS ,

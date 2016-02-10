@@ -50,6 +50,10 @@ const SwitcherManager = new Lang.Class({
 		this._popup.actor.connect('destroy', Lang.bind(this, function() {
 												this._popup = null;
 											}));		
+	},
+	_refresh: function()
+	{
+		log("Not implemented yet!");
 	}
 });
 
