@@ -1,3 +1,7 @@
+## Version 0.7.1:
+  - Fix: Fixed an issue with old gtk.
+  - Add: Support for Gnome Shell 3.20.
+
 ## Version 0.7:
   - Add: Extended modes to top (Above) and bottom (Below).
   - Add: Missing spanish translations for custom settings.
