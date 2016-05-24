@@ -10,7 +10,7 @@
 */
 .display-switcher-box {
 	text-align: center;
-	color: @theme_fg_color;
+	color: #ffffff;
 	font-size: 14px;
 }
 
