@@ -1,4 +1,7 @@
-# Gnome-shell - Display Switcher Extension
+# DISABLED!!!! - Gnome-shell - Display Switcher Extension
+
+!!!!!attention!!!!!!
+*This extension will be disabled since this functionalty is available at Gnome 3.26+. To use Gnome just press 'Super' + P and hold Super.*
 
 Display Switcher is an extension for gnome-shell 3.12+ that provides an easy and fast way to switch your display monitors.
 
